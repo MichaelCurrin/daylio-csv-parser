@@ -11,11 +11,11 @@ This _daylio_ application is for users of the Daylio diary app who want to go be
 
 The application is broken up into the following logical areas:
 
-1. [ETL](https://en.wikipedia.org/wiki/Extract,_transform,_load) of the data (CSV to cleaned CSV to database)
+1. [ETL](https://en.wikipedia.org/wiki/Extract,_transform,_load) of the data (input CSV to cleaned CSV and then a database)
 2. Personalised reporting (database queries for create reports)
 3. Additional functionality to improve awareness and provide insights which can drive actions. Such as a dashboard view over various time frames, measurement against goals, automated alerts and forecasting.
 
 ## Documentation
 
 - [Installation instructions](docs/installation.md)
-- [Usage instructions](docs/usage.md]
+- [Usage instructions](docs/usage.md)
