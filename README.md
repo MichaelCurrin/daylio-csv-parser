@@ -1,55 +1,34 @@
-# Daylio Analysis Tool
-Process personal data exported from the [Daylio](https://daylio.webflow.io/) app for analysis and reporting.
+# Daylio CSV Convert
+_Convert a Daylio CSV export into a cleaned CSV and a SQLite database._
 
 
-## Context
+## What is Daylio?
 
-[Daylio](https://daylio.webflow.io/) is a mobile app which works as visual diary or journal. It allows one to keep a history of daily activities and moods. Any number of activities can be recorded as binary Yes/No values for that entry, with a custom icon and label. A single mood for the entry is recorded on 5-point scale from low to high. A text note is optional.
+[Daylio](https://daylio.webflow.io/) is a mobile app which works as visual diary or journal. It allows one to keep a history of daily activities and moods. 
 
-This repo's [dayliopy]() application is for users of the Daylio diary app who want to go beyond the app's own built-in reporting to seek a better understanding of one's experiences and emotions. The aim of this project is to use analysis and reporting to improve self-awareness and provide to insights which can drive actions.
+For a single entry at a date and time, the following can be stored in the app.
 
-
-## Documention
-
-Note that a `daylio_export.csv` file exported from Daylio is required to use this application. Therefore it is highly recommended to unlock Daylio's _Premium_ mode first.
-
-- [Installation instructions](docs/installation.md).
-- [Usage instructions](docs/usage.md)
-
+- A _mood_ selection. By default, on 5-point scale from low to high with labels. Labels may be changed and additional moods may be added. TODO: Check the default labels.
+- Checkboxes for all user-defined _activities_. These are only recorded as boolean values, not as counts (though could later be aggregated for a day, week, etc). They can each have custom icon and label and additional activities can be added. An activity might be what you did or how you felt physically/emotionally that day.
+- A text _note_. This may be left blank.
 
 ## Features
 
-The cleaning component can be run independently to read a Daylio-formatted CSV with any number of columns, clean it and then write out a new file.
+This [dayliopy]() Python application provides to two services.
 
-### Components
+1. CSV cleaning
+    1. Read a Daylio CSV (Premium mode is required to export it).
+    2. Clean it.
+    3. Write out a new CSV.
+2. Read new CSV into a SQLite3 database.
 
-There are several reporting components, with different uses and levels of complexity.
+Those two services may be run separately. The resulting CSV and database files are intended to be a format which is much easier to work with than the standard export.
 
-- Terminal reporting. _TO BE COMPLETED_
-- Visual reporting. _TBC_
-- A dashboard view over various time frames. _TBC_
-- Measurement of totals or rates against goals. _TBC_
-- Automated alerts based on custom conditions. _TBC_
-- Forecasting. _TBC_
 
-### Implementation
+## Documentation
 
-The features are implemented with the following processes:
-
-- [ETL](https://en.wikipedia.org/wiki/Extract,_transform,_load) of the data
-    1. Clean input CSV
-    2. Write out to a new cleaned CSV.
-    3. Read cleaned CSV into a database.
-- On-demand reporting
-    1. Handle user request.
-    2. Fetch data.
-    3. Process and report on data.
-- Automated reporting and notifications
-    1. Run weekly or daily job on schedule.
-    2. Check condition is met (otherwise always run).
-    3. Send alert
-      - e.g. Send request with message to _Maker_, so that _IFTTT_ can trigger a mobile alert
-      - e.g. Send text or HTML in e-mail using configured Gmail account.
+- [Installation instructions](docs/installation.md).
+- [Usage instructions](docs/usage.md)
 
 
 ## Other projects
