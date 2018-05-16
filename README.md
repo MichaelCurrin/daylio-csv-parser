@@ -1,21 +1,53 @@
-# Daylio Analysis Tool
-Process personal data exported from the [Daylio](https://daylio.webflow.io/) app for analysis and reporting.
+# Daylio CSV Parser
+_Convert a Daylio CSV export into a more usable CSV and a SQLite database._
 
-## Context
 
-[Daylio](https://daylio.webflow.io/) is a mobile app which works as visual diary or journal. It allows one to keep a history of daily activities and moods. Any number of activities can be recorded as binary Yes/No values for that entry, with a custom icon and label. A single mood for the entry is recorded on 5-point scale from low to high. A text note is optional.
+## What is Daylio?
 
-This [dayliopy]() application is for users of the Daylio diary app who want to go beyond the app's own built-in reporting to seek a better understanding of one's experiences and emotions. Users of this application need to have Daylio Premium unlocked in order to export the `daylio_export.csv` file. There are existing Python projects around Daylio data such as [daylio-visualisations](https://github.com/pajowu/daylio-visualisations) and [https://github.com/pwcazenave/daylio2yearinpixels]() which are worth checking out.
+Daylio is mobile app and their [website](https://daylio.webflow.io/) says:
 
-## Structure
+>"Daylio enables you to keep a private diary without having to write a single line".
 
-The application is broken up into the following areas:
+Entries are created at a specific date and time and may have the following attributes:
 
-1. [ETL](https://en.wikipedia.org/wiki/Extract,_transform,_load) of the data (input CSV to cleaned CSV and then a database)
-2. Personalised reporting (database queries for create reports)
-3. Additional functionality, to improve awareness and provide insights which can drive actions. Such as a dashboard view over various time frames, measurement against goals, automated alerts and forecasting.
+- **Mood:** Choose a value from radio button selection of face icons. These follow a 5-point high to low scale and may be relabelled within the mobile app.
+- **Activities:** Tick checkboxes for your custom set of activities. These are only recorded as boolean values, not as counts (though could later be aggregated for a day, week, etc). They can each have custom icon and label and additional activities can be added. An activity might be what you did or how you felt physically/emotionally that day.
+- **Note:** An optional text note.
+
+For a guide on using the app, see the [Daylio quick tips](https://medium.com/@helpfuldad/heres-how-i-m-using-the-daylio-app-to-ensure-my-life-is-in-balance-i-m-on-372-days-and-counting-336b960a34ee) post.
+
+
+## Features
+
+This [dayliopy]() Python application provides to two services.
+
+1. CSV cleaning
+    1. Read a Daylio CSV (Premium mode is required to export it).
+    2. Clean it.
+    3. Write out a new CSV.
+2. Read the new CSV into a SQLite3 database.
+
+Those two services may be run separately. The resulting CSV and database files are intended to be a format which is much easier to work with than the standard export.
+
 
 ## Documentation
 
-- [Installation instructions](docs/installation.md)
+- [Installation instructions](docs/installation.md).
 - [Usage instructions](docs/usage.md)
+
+
+## Other projects
+
+Below are Github repos based around Daylio, which are worth checking out:
+
+- Python
+    * [daylio-visualisations](https://github.com/pajowu/daylio-visualisations)
+    * [daylio2yearinpixels](https://github.com/pwcazenave/daylio2yearinpixels)
+- C#
+    * [CleanDaylioExport](https://github.com/ecsplendid/CleanDaylioExport)
+- C++
+    * [daylio-stats](https://github.com/xdmtk/daylio-stats)
+- Other
+    * [Quantified Self](https://github.com/woop/awesome-quantified-self) is a curated list of resources for various tools in the diary area.
+
+Any contributions to the above list are welcome.
