@@ -1,10 +1,11 @@
 # Usage Instructions
 
-If you have followed the [installation] instructions and have _Daylio_'s Premium mode activiated, you may continue with the usage instructions here.
+If you have followed the [Installation Instructions](installation.md) and have Daylio's Premium mode activated, you may continue with the usage instructions here.
 
-The main aim of this project is to expand make the Daylio export CSV easier to use, by transforming the data. In particular, the _activities_ column is split out and this application has been set to work on any number activities. Though, the moods for note are related to 5. TODO: Convert the defaults.
+The main aim of this project is to expand make the Daylio export CSV easier to use, by transforming the data. In particular, the _activities_ column is split out and this application has been set to work on any number activities. Though, the moods for now are restricted to 5. TODO: Show the defaults.
 
-# 1. Create the data
+
+## 1. Create the data
 
 First, create a `daylio_export.csv` file on your mobile device. 
 
