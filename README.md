@@ -10,8 +10,8 @@ Daylio is mobile app and their [website](https://daylio.webflow.io/) says:
 
 Entries are created at a specific date and time and may have the following attributes:
 
-- **Mood:** A _mood_ value radio button selection. These follow a 5-point high to low scale and may be relabelled within the mobile app.
-- **Activities:** Checkboxes for all user-defined _activities_. These are only recorded as boolean values, not as counts (though could later be aggregated for a day, week, etc). They can each have custom icon and label and additional activities can be added. An activity might be what you did or how you felt physically/emotionally that day.
+- **Mood:** Choose a value from radio button selection of face icons. These follow a 5-point high to low scale and may be relabelled within the mobile app.
+- **Activities:** Tick checkboxes for your custom set of activities. These are only recorded as boolean values, not as counts (though could later be aggregated for a day, week, etc). They can each have custom icon and label and additional activities can be added. An activity might be what you did or how you felt physically/emotionally that day.
 - **Note:** An optional text note.
 
 ## Features
@@ -37,9 +37,14 @@ Those two services may be run separately. The resulting CSV and database files a
 
 Below are Github repos based around Daylio, which are worth checking out:
 
-- [daylio-visualisations](https://github.com/pajowu/daylio-visualisations) in Python
-- [daylio2yearinpixels](https://github.com/pwcazenave/daylio2yearinpixels) in Python 
-- [CleanDaylioExport](https://github.com/ecsplendid/CleanDaylioExport) in C#
-- [daylio-stats](https://github.com/xdmtk/daylio-stats) in C++
+- Python
+    * [daylio-visualisations](https://github.com/pajowu/daylio-visualisations)
+    * [daylio2yearinpixels](https://github.com/pwcazenave/daylio2yearinpixels)
+- C#
+    * [CleanDaylioExport](https://github.com/ecsplendid/CleanDaylioExport)
+- C++
+    * [daylio-stats](https://github.com/xdmtk/daylio-stats)
+- Other
+    * [Quantified Self](https://github.com/woop/awesome-quantified-self) is a curated list of resources for various tools in the diary area.
 
-Also, see the curated list of [Quantified Self](https://github.com/woop/awesome-quantified-self) resources.
+Any contributions to the above list are welcome.
