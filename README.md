@@ -1,5 +1,5 @@
-# Daylio CSV Convert
-_Convert a Daylio CSV export into a cleaned CSV and a SQLite database._
+# Daylio CSV Parser
+_Convert a Daylio CSV export into a more usable CSV and a SQLite database._
 
 
 ## What is Daylio?
