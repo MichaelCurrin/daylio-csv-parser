@@ -1,5 +1,16 @@
 # Daylio CSV Parser
-_Convert a Daylio CSV export into a more usable CSV and a SQLite database._
+_Convert a Daylio CSV export into a more usable CSV, create a database from it and fit a machine learning model to the data._
+
+
+## Documentation
+
+- [Installation instructions](docs/installation.md).
+- [Usage instructions](docs/usage.md)
+  - 1. Create a clean CSV using a CSV exported from Daylio (in premium mode)
+  - 2. Create a database file from the clean CSV
+  - 3. Fit a stats model on the clean CSV data
+
+The three features may be run separately, though the first step is a required to perform either of the last two steps.
 
 
 ## What is Daylio?
@@ -15,25 +26,6 @@ Entries are created at a specific date and time and may have the following attri
 - **Note:** An optional text note.
 
 For a guide on using the app, see the [Daylio quick tips](https://medium.com/@helpfuldad/heres-how-i-m-using-the-daylio-app-to-ensure-my-life-is-in-balance-i-m-on-372-days-and-counting-336b960a34ee) post.
-
-
-## Features
-
-This [dayliopy]() Python application provides to two services.
-
-1. CSV cleaning
-    1. Read a Daylio CSV (Premium mode is required to export it).
-    2. Clean it.
-    3. Write out a new CSV.
-2. Read the new CSV into a SQLite3 database.
-
-Those two services may be run separately. The resulting CSV and database files are intended to be a format which is much easier to work with than the standard export.
-
-
-## Documentation
-
-- [Installation instructions](docs/installation.md).
-- [Usage instructions](docs/usage.md)
 
 
 ## Other projects
