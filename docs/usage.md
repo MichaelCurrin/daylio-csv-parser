@@ -9,7 +9,7 @@ The main aim of this project is to expand make the Daylio export CSV easier to u
 
 ### 1. Create the data
 
-First, create a `daylio_export.csv` file on your mobile device. 
+First, create a `daylio_export.csv` file on your mobile device. This should contain all records, from the first one up to the most recent.
 
 Sample input CSV:
 
@@ -41,10 +41,8 @@ TBC
 TBC
 
 
-## Fit a model
+## Fit a stats model
 
-Fit a machine learning model.
-
-1. Read in the cleaned CSV
-2. Run Ordinary Least Squares model
-3. Print model stats to better under factors influencing mood
+1. Read in the cleaned CSV.
+2. Run Ordinary Least Squares model.
+3. Print model stats to better under factors influencing mood.
