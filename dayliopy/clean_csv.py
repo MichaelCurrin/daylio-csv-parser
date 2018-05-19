@@ -78,21 +78,26 @@ def clean_csv(csv_in, csv_out):
     available_activities = set()
     in_data = []
 
+    print("Reading CSV: {}".format(csv_in))
+
     with open(csv_in) as f_in:
         reader = csv.DictReader(f_in)
 
         for row in reader:
             activities = row['activities'].split(" | ")
 
-            # Ignore row of no activities, which will a single null string
+            # Ignore row of no activities, which will be a single null string
             # after splitting.
             if len(activities) == 1 and activities[0] == "":
                 activities = []
             else:
+                activities = [activity.strip() for activity in activities]
                 available_activities.update(activities)
 
             row['activities'] = activities
             in_data.append(row)
+
+    print("Replacing activities column with multiple activity columns")
 
     default_activities = {key: 0 for key in available_activities}
     out_data = [clean_row(row, default_activities.copy()) for row in in_data]
@@ -111,6 +116,8 @@ def clean_csv(csv_in, csv_out):
     # For readability of the CSV, insert the dynamic acitvity values before
     # the text note.
     out_fields[-1:-1] = activity_columns
+
+    print("Writing cleaned CV to: {}".format(csv_out))
 
     with open(csv_out, 'w') as f_out:
         writer = csv.DictWriter(f_out, fieldnames=out_fields)
