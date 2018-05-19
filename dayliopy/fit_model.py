@@ -14,7 +14,7 @@ model, each factor has a coefficient, which helps determine the strength and
 direction of the factor's influence on the mood score.
 """
 import pandas as pd
-import statsmodels.api as sm
+import statsmodels.api
 
 from lib.config import AppConf
 conf = AppConf()
@@ -99,7 +99,7 @@ def fit(csv_in_path):
         ['mood_score'],
         axis=1,
     )
-    return sm.OLS(y, X).fit()
+    return statsmodels.api.OLS(y, X).fit()
 
 
 def main():
