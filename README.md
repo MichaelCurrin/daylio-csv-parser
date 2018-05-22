@@ -1,9 +1,7 @@
 # Daylio CSV Parser
 >Improve the usability of the Daylio CSV export and explore reports around your data.
 
-[What is Daylio?](docs/what_is_daylio.md)
-
-Daylio's standard export is limited, so the main feature of this application is to handle that file. In particular, it splits out values in the _activities_ column into multiple activity columns.
+The _dayliopy_ application parses a CSV export created by Daylio ([What is Daylio?](docs/what_is_daylio.md)) to create a more useful CSV. In particular, the _activities_ column with multiple activities listed in a single cell is split out into multiple columns, with appropriate names and values as `0` or `1`.
 
 
 ## Installation
