@@ -1,17 +1,58 @@
 # Usage Instructions
 
-If you have followed the [Installation Instructions](installation.md) and have Daylio's Premium mode activated, you may continue with the usage instructions here.
+If you have followed the [Installation Instructions](installation.md) and have the **Daylio premium mode** activated, you may continue with the usage instructions here.
 
-The main aim of this project is to expand make the Daylio export CSV easier to use, by transforming the data. In particular, the _activities_ column is split out and this application has been set to work on any number activities. Though, the moods for now are restricted to 5.
+
+## Configuration
+
+This project uses Python's built-in [ConfigParser](https://docs.python.org/3/library/configparser.html) format, which is easy for end-users to edit.
+
+The [clean_csv.py](/dayiopy/clean_csv.py) script will dynamically handle any number of activities in the _activities_ column without any configuration needed. However, the labels for moods should be configured, as below. Also, you may optionally override any paths for CSV and db files.
+
+View the built-in [app.conf](/dayliopy/etc/app.conf) config file to see what options can be set.
+
+```bash
+$ view dayliopy/etc/app.conf
+```
+
+Create an unversioned local config file, to override fields in `app.conf`.
+
+```bash
+$ nano dayliopy/etc/app.local.conf
+```
+
+Example content:
+```
+# Local config file.
+# 
+
+[daylio]
+# Labels for high to low moods.
+mood5: amazing
+mood2: sad
+mood1: horrible
+```
+
+Even though the Daylio mobile app does allow more, a maximum of 5 mood levels is allowed in this application. Any others will raise an error.
 
 
 ## Clean a CSV
 
-### 1. Create the data
+This section covers the main feature of this project. The later features require this _Clean a CSV_ sections steps to be completed first.
 
-First, create a `daylio_export.csv` file on your mobile device. This should contain all records, from the first one up to the most recent.
 
-Sample input CSV.
+### 1. Export your data
+
+Export the data on your mobile device. 
+
+1. Open the Daylio app.
+2. Tap _More_.
+3. Tap _Export Entries_.
+4. Select a download option such as e-mail, Google Drive or Dropbox.
+
+You will now have a file named `daylio_export.csv` which contains all your entries from the most recent back to the first.
+
+Format of the export:
 
 ```
 year,date,weekday,time,mood,activities,note
@@ -20,20 +61,22 @@ year,date,weekday,time,mood,activities,note
 2018,16 May,Tuesday,11:41 pm,horrible,"","Did nothing today."
 ```
 
-This CSV always has 7 columns. However, the _activities_ value needs further processing to make it easy handle in a CSV editor. Each activity is separated by a pipe symbol and there may be no activities an empty string, or all the available activities may be used. The activities may be a mixture of the built-in labels and the ones defined by a user.
+The CSV always has 7 columns, however, the _activities_ value needs further processing to make it easy to handle in a CSV editor. That is the reason for this project.
 
-Next, move the CSV form your mobile device to your computer. The simplest is to use a USB cable and plug your device in. Though, you might want to use Google Drive or e-mail.
+Each activity is separated by a pipe symbol and there may be no activities an empty string, or all the available activities may be used. The activities may be a mixture of the built-in labels and the ones defined by a user.
 
-
-### 2. Create a clean CSV
-
-Move the CSV to dayliopy's default configured location.
+Download the file on your computer and then move CSV to _dayliopy's_ configured CSV input location.
 
 ```bash
 $ mv daylio_export.csv path/to/repo/dayliopy/var/data_in/daylio_export.csv
 ```
 
-Read in the above file, clean the data and write out to the default configured location.
+
+### 2. Import the data
+
+Use the commands below to read in the above export file, clean the data and write out a new CSV to the configured location. 
+
+Note that this will overwrite the existing output file. This should be fine though, since the input file always contains all data to date.
 
 ```bash
 $ cd path/to/repo/dayliopy
@@ -84,7 +127,6 @@ CREATE TABLE daylio(
   "stressed" TEXT,
   "note" TEXT
 );
-sqlite> .quit
 ```
 
 SQLite's default behaviour it to set the affinity for each column to TEXT (see [Datatypes in SQLite Version 3](https://www.sqlite.org/datatype3.html)). Numeric calculations may still be done as if the columns were numeric. You may change the column types if you wish, by altering the table, or by creating a table with the same name manually _before_ doing the import.
@@ -95,6 +137,7 @@ SQLite's default behaviour it to set the affinity for each column to TEXT (see [
 #### Query using SQLite interactive mode.
 
 ```bash
+$ cd path/to/repo/dayliopy
 $ sqlite3 var/data_out/db.sqlite
 sqlite> -- The default most is csv, which is not pretty.
 sqlite> .mode columns
@@ -132,10 +175,11 @@ $ sqlite3 var/data_out/db.sqlite -header -csv \
 The [fit_model.py](/dayiopy/fit_model.py) script performs the following steps:
 
 1. Read in the cleaned CSV.
-2. Run Ordinary Least Squares model.
-3. Print model stats to better under factors influencing mood.
+2. Fit Ordinary Least Squares model using the data.
+3. Print model stats, to better under factors influencing mood.
 
 ```bash
+$ cd path/to/repo/dayliopy
 $ (venv) python fit_model.py
                             OLS Regression Results                            
 ==============================================================================
