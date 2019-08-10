@@ -1,0 +1,17 @@
+# Python compiled binaries.
+__pycache__/
+
+
+# Python virtual environment as directory or symlink.
+venv/
+venv
+virtualenv/
+virtualenv
+
+# Local configuration and model files.
+*.local.conf
+
+# Local data.
+dayliopy/var/data_in/*.csv
+dayliopy/var/data_out/*.csv
+dayliopy/var/data_out/*.sqlite
