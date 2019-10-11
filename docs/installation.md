@@ -2,8 +2,8 @@
 
 ## Project requirements
 
-- Python 3.5 or above is recommended.
-- SQLite3 (optional)
+- _Python_ 3.5+
+- _SQLite3_ (optional)
 
 ## Install OS-level dependencies
 
@@ -20,7 +20,7 @@ $ sudo apt-get update sqlite3
 
 ## Install project dependencies
 
-It is usually best-practice in Python projects to install into a sandboxed _virtual environment_, which is set to a specific Python version and contains on the packages you install into it so that your Python projects do not get affected.
+It is usually best-practice in _Python_ projects to install into a sandboxed _virtual environment_, This will be locked to a specific Python version and contain only the _Python_ libraries that you install into it, so that your _Python_ projects do not get affected.
 
 Follow this guide to [Setup a Python 3 Virtual Environment](https://gist.github.com/MichaelCurrin/3a4d14ba1763b4d6a1884f56a01412b7).
 
