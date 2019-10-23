@@ -12,6 +12,10 @@ The model is fitted using X dimensions as numeric values, time and categorical
 variables (encoded as numeric values). Text values are ignored. On the fitted
 model, each factor has a coefficient, which helps determine the strength and
 direction of the factor's influence on the mood score.
+
+# TODO Get coeff and print that and not other fields.
+# Can I apply to 5 point scale?
+Years and months have over 1 - is the range not -1 to 1 correlation?
 """
 import pandas as pd
 import statsmodels.api
@@ -43,14 +47,13 @@ def prepare_data(df):
         axis=1,
         inplace=True
     )
-
     df['datetime'] = pd.to_datetime(df.datetime)
     df.set_index(
         'datetime',
         inplace=True,
         verify_integrity=True
     )
-
+    # TODO Why is month 1 missing across years?
     df['month_num'] = df.index.month
     df['year'] = df.index.year
 

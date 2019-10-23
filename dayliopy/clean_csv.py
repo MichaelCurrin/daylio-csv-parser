@@ -14,7 +14,7 @@ conf = AppConf()
 def clean_row(row, default_activities):
     """Expect a CSV row and default activities and return cleaned row.
 
-    @param row: dict of source CSV values.
+    @param row: dict of values as read from source CSV.
     @param default_activities: list of activities, initialised to default
         values.
 
@@ -22,16 +22,13 @@ def clean_row(row, default_activities):
         are fixed and also fields which are dynamic, based on activities
         which are used.
     """
-    # Combine the three time-related columns into a single value, then parse
-    # it to get a datetime object.
-    datetime_str = "{year} {date} {time}".format(
-        year=row['year'],
-        date=row['date'],
+    datetime_str = "{date} {time}".format(
+        date=row['full_date'],
         time=row['time']
     )
     datetime_obj = datetime.datetime.strptime(
         datetime_str,
-        "%Y %d %B %I:%M %p"
+        r"%Y-%m-%d %I:%M %p"
     )
 
     # Match the mood label against the configured label and numeric value.
@@ -81,6 +78,8 @@ def clean_csv(csv_in, csv_out):
     print("Reading CSV: {}".format(csv_in))
 
     with open(csv_in) as f_in:
+        # Ignore first byte which is an unwanted invisible character.
+        f_in.read(1)
         reader = csv.DictReader(f_in)
 
         for row in reader:
