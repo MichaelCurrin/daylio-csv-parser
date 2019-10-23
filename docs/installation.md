@@ -1,16 +1,34 @@
 # Installation
 
-## Project requirements
+## Clone the repo
 
-- _Python_ 3.5+
-- _SQLite3_ (optional)
+```bash
+$ git clone git@github.com:MichaelCurrin/daylio-csv-parser.git
+```
 
-## Install OS-level dependencies
+## Install system dependencies
 
-**Ubuntu/Debian**
+### Python
 
-If you intend to create a SQLite database file from you data, ensure you install/upgrade SQLite.
+Python 3.5 or above is recommended.
 
+**Debian/Ubuntu**
+
+```bash
+$ sudo apt-get install python3
+```
+
+**Mac OS X**
+
+```bash
+$ brew install python
+```
+
+### SQLite
+
+If you intend to create a SQLite database file from you data, ensure you install SQLite if it not builtin.
+
+**Debian/Ubuntu**
 
 ```bash
 $ sudo apt-get update
@@ -18,10 +36,23 @@ $ sudo apt-get install libsqlite3-dev
 $ sudo apt-get update sqlite3
 ```
 
+**Mac OS X**
+
+```bash
+$ brew install sqlite3
+```
+
 ## Install project dependencies
 
 It is usually best-practice in _Python_ projects to install into a sandboxed _virtual environment_, This will be locked to a specific Python version and contain only the _Python_ libraries that you install into it, so that your _Python_ projects do not get affected.
 
-Follow this guide to [Setup a Python 3 Virtual Environment](https://gist.github.com/MichaelCurrin/3a4d14ba1763b4d6a1884f56a01412b7).
+See can see this guide on how to [Setup a Python 3 Virtual Environment](https://gist.github.com/MichaelCurrin/3a4d14ba1763b4d6a1884f56a01412b7) if you want to install/upgrade Python or want to understand more about virtual environments. Otherwise continue below.
 
-You can then continue to the [Usage](/docs/usage.md) doc.
+```bash
+$ cd <PATH_TO_REPO>
+$ python3 -m venv venv
+$ source venv/bin/activate
+(venv) $ pip install -r requirements.txt
+```
+
+You can now continue to the [Usage](/docs/usage.md) doc.

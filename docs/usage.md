@@ -24,7 +24,7 @@ $ nano dayliopy/etc/app.local.conf
 Example content:
 ```
 # Local config file.
-# 
+#
 
 [daylio]
 # Labels for high to low moods.
@@ -43,7 +43,7 @@ This section covers the main feature of this project. The later features require
 
 ### 1. Export your data
 
-Export the data on your mobile device. 
+Export the data on your mobile device.
 
 1. Open the Daylio app.
 2. Tap _More_.
@@ -68,18 +68,18 @@ Each activity is separated by a pipe symbol and there may be no activities an em
 Download the file on your computer and then move CSV to _dayliopy's_ configured CSV input location.
 
 ```bash
-$ mv daylio_export.csv path/to/repo/dayliopy/var/data_in/daylio_export.csv
+$ mv daylio_export.csv <PATH_TO_REPO>/dayliopy/var/data_in/daylio_export.csv
 ```
 
 
 ### 2. Import the data
 
-Use the commands below to read in the above export file, clean the data and write out a new CSV to the configured location. 
+Use the commands below to read in the above export file, clean the data and write out a new CSV to the configured location.
 
 Note that this will overwrite the existing output file. This should be fine though, since the input file always contains all data to date.
 
 ```bash
-$ cd path/to/repo/dayliopy
+$ cd <PATH_TO_REPO>/dayliopy
 $ source ../venv/bin/activate
 $ (venv) python clean_csv.py
 Reading CSV: /home/.../.../daylio-csv-parser/dayliopy/var/data_in/daylio_export.csv
@@ -103,12 +103,12 @@ You can now open the cleaned CSV in a CSV editor and start using it. If you want
 
 ### 1. Create
 
-This step requies a cleaned CSV created in the above section.
+This step requires a cleaned CSV created in the above section.
 
 Use SQLite to create a database and a new table called _daylio_.
 
 ```bash
-$ cd path/to/repo/dayliopy
+$ cd <PATH_TO_REPO>/dayliopy
 $ # Create new empty db file if none exists. Use the project's setup script
   # to import from the default cleaned CSV file location.
 $ sqlite3 var/data_out/db.sqlite < ../tools/setup_db.sql
@@ -129,7 +129,7 @@ CREATE TABLE daylio(
 );
 ```
 
-SQLite's default behaviour it to set the affinity for each column to TEXT (see [Datatypes in SQLite Version 3](https://www.sqlite.org/datatype3.html)). Numeric calculations may still be done as if the columns were numeric. You may change the column types if you wish, by altering the table, or by creating a table with the same name manually _before_ doing the import.
+SQLite's default behavior it to set the affinity for each column to TEXT (see [Datatypes in SQLite Version 3](https://www.sqlite.org/datatype3.html)). Numeric calculations may still be done as if the columns were numeric. You may change the column types if you wish, by altering the table, or by creating a table with the same name manually _before_ doing the import.
 
 
 ### 2. Use
@@ -181,7 +181,7 @@ The [fit_model.py](/dayiopy/fit_model.py) script performs the following steps:
 ```bash
 $ cd path/to/repo/dayliopy
 $ (venv) python fit_model.py
-                            OLS Regression Results                            
+                            OLS Regression Results
 ==============================================================================
 Dep. Variable:             mood_score   R-squared:                       0.955
 ...
@@ -210,4 +210,3 @@ Skew:                           0.206   Prob(JB):                       0.0480
 Kurtosis:                       3.166   Cond. No.                         20.0
 ==============================================================================
 ```
-
