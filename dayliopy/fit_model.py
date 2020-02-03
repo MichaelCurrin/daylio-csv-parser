@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """
 Fit Model application file.
 

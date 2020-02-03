@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """
 Mood report application file.
 """

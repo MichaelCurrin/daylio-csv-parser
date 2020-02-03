@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """
 Clean CSV application file.
 
