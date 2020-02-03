@@ -5,6 +5,7 @@
 
 This _dayliopy_ application parses a CSV exported from Daylio (in premium mode) to create a more useful CSV. In particular, the _activities_ column with multiple activities listed in a single cell is split out into multiple columns, with appropriate names and values as `0` or `1`.
 
+For interest, see related mood tracking projects by other developers [here](docs/related_projects.md).
 
 ## Installation
 
@@ -12,7 +13,7 @@ See the [Installation Instructions](docs/installation.md) doc.
 
 ## Usage example
 
-See [Usage Instructions](docs/usage.md) doc for more detailed steps.
+See [Usage Instructions](docs/usage.md) doc for more detailed steps. An overview of usage is covered below.
 
 ### Main feature
 
@@ -25,13 +26,17 @@ $ ./clean_csv.py
 
 ### Other features
 
-These commands may be run independently, but all require the output from the main feature above.
+Assuming you have created a clean CSV using the step above, you can run any of these commands if you wish to. The order does not matter.
 
-Create a database file from the cleaned CSV.
+#### Database
+
+Create a database file from the cleaned CSV. You can then access data in the database.
 
 ```bash
 $ sqlite3 var/data_out/db.sqlite < ../tools/setup_db.sql
 ```
+
+#### Aggregate mood report
 
 View a report around mood score aggregate stats.
 
@@ -39,14 +44,14 @@ View a report around mood score aggregate stats.
 $ ./mood_report.py
 ```
 
-View a report on a stats model fitted your data.
+#### Regression report
+
+View a report on a stats model which was fitted your data.
 
 ```bash
 $ ./fit_model.py
 ```
 
-## Meta
+## License
 
 Distributed under the MIT license. See [LICENSE](LICENSE) for more information.
-
-See related projects by other developers [here](docs/related_projects.md).
