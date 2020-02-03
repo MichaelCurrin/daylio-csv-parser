@@ -33,7 +33,7 @@ mood2: sad
 mood1: horrible
 ```
 
-Even though the Daylio mobile app does allow more, a maximum of 5 mood levels is allowed in this application. Any others will raise an error.
+Even though the _Daylio_ mobile app does allow more, a maximum of 5 mood levels is allowed in this application. Any others will raise an error.
 
 
 ## Clean a CSV
@@ -89,10 +89,10 @@ Writing cleaned CV to: /home/.../.../daylio-csv-parser/dayliopy/var/data_out/cle
 
 Example values for a row of the output CSV:
 
-| timestamp | datetime | date | weekday_label | weekday_num | mood_label | mood_score | clean | cook | music | stressed | note |
-|--------------|---------------------|------------|---------------|-------------|------------|------------|-------|------|-------|-----------------------|-----------------|
-| 1522444920.0 | 2018-03-30 23:22:00 | 2018-03-30 | Friday | 4 | average | 3 | 1 | 0 | 0 | 1 | Did a roadtrip. |
-| 1522360440.0 | 2018-03-29 23:54:00 | 2018-03-29 | Thursday | 3 | happy | 4 | 0 | 1 | 0 | 0 |  |
+| timestamp    | datetime            | date       | weekday_label | weekday_num | mood_label | mood_score | clean | cook | music | stressed | note            |
+| ------------ | ------------------- | ---------- | ------------- | ----------- | ---------- | ---------- | ----- | ---- | ----- | -------- | --------------- |
+| 1522444920.0 | 2018-03-30 23:22:00 | 2018-03-30 | Friday        | 4           | average    | 3          | 1     | 0    | 0     | 1        | Did a roadtrip. |
+| 1522360440.0 | 2018-03-29 23:54:00 | 2018-03-29 | Thursday      | 3           | happy      | 4          | 0     | 1    | 0     | 0        |                 |
 
 _Formatted using [markdown table tool](https://www.tablesgenerator.com/markdown_tables)._
 
@@ -137,7 +137,7 @@ SQLite's default behavior it to set the affinity for each column to TEXT (see [D
 #### Query using SQLite interactive mode.
 
 ```bash
-$ cd path/to/repo/dayliopy
+$ cd dayliopy
 $ sqlite3 var/data_out/db.sqlite
 sqlite> -- The default most is csv, which is not pretty.
 sqlite> .mode columns
@@ -179,7 +179,7 @@ The [fit_model.py](/dayiopy/fit_model.py) script performs the following steps:
 3. Print model stats, to better under factors influencing mood.
 
 ```bash
-$ cd path/to/repo/dayliopy
+$ cd dayliopy
 $ (venv) ./fit_model.py
                             OLS Regression Results
 ==============================================================================
