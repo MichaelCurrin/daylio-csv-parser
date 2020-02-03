@@ -81,10 +81,12 @@ Note that this will overwrite the existing output file. This should be fine thou
 ```bash
 $ cd <PATH_TO_REPO>/dayliopy
 $ source ../venv/bin/activate
-$ (venv) ./clean_csv.py
-Reading CSV: /home/.../.../daylio-csv-parser/dayliopy/var/data_in/daylio_export.csv
+$ ./clean_csv.py
+```
+```
+Reading CSV: .../daylio-csv-parser/dayliopy/var/data_in/daylio_export.csv
 Replacing activities column with multiple activity columns
-Writing cleaned CV to: /home/.../.../daylio-csv-parser/dayliopy/var/data_out/cleaned.csv
+Writing cleaned CV to: .../daylio-csv-parser/dayliopy/var/data_out/cleaned.csv
 ```
 
 Example values for a row of the output CSV:
@@ -109,9 +111,12 @@ Use SQLite to create a database and a new table called _daylio_.
 
 ```bash
 $ cd <PATH_TO_REPO>/dayliopy
+
 $ # Create new empty db file if none exists. Use the project's setup script
   # to import from the default cleaned CSV file location.
 $ sqlite3 var/data_out/db.sqlite < ../tools/setup_db.sql
+
+$ # View the schema.
 $ sqlite3 var/data_out/db.sqlite '.schema'
 CREATE TABLE daylio(
   "timestamp" TEXT,
@@ -180,7 +185,7 @@ The [fit_model.py](/dayiopy/fit_model.py) script performs the following steps:
 
 ```bash
 $ cd dayliopy
-$ (venv) ./fit_model.py
+$ ./fit_model.py
                             OLS Regression Results
 ==============================================================================
 Dep. Variable:             mood_score   R-squared:                       0.955
