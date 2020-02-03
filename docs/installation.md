@@ -48,11 +48,20 @@ It is usually best-practice in _Python_ projects to install into a sandboxed _vi
 
 See can see this guide on how to [Setup a Python 3 Virtual Environment](https://gist.github.com/MichaelCurrin/3a4d14ba1763b4d6a1884f56a01412b7) if you want to install/upgrade Python or want to understand more about virtual environments. Otherwise continue below.
 
+Create virtual environment:
+
 ```bash
 $ cd <PATH_TO_REPO>
 $ python3 -m venv venv
 $ source venv/bin/activate
-(venv) $ pip install -r requirements.txt
+```
+
+Install packages:
+
+```bash
+$ pip install pip --upgrade
+$ pip install -r requirements.txt
+$ pip install -r requirements-dev.txt
 ```
 
 You can now continue to the [Usage](/docs/usage.md) doc.
