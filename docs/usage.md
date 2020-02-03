@@ -2,6 +2,13 @@
 
 If you have followed the [Installation Instructions](installation.md) and have the **Daylio premium mode** activated, you may continue with the usage instructions here.
 
+This doc assumes you have activate the virtual environment and are in the app directory
+
+```bash
+$ cd <PATH_TO_REPO>
+$ source venv/bin/activate
+$ cd dayliopy
+```
 
 ## Configuration
 
@@ -79,8 +86,6 @@ Use the commands below to read in the above export file, clean the data and writ
 Note that this will overwrite the existing output file. This should be fine though, since the input file always contains all data to date.
 
 ```bash
-$ cd <PATH_TO_REPO>/dayliopy
-$ source ../venv/bin/activate
 $ ./clean_csv.py
 ```
 ```
@@ -142,7 +147,6 @@ SQLite's default behavior it to set the affinity for each column to TEXT (see [D
 #### Query using SQLite interactive mode.
 
 ```bash
-$ cd dayliopy
 $ sqlite3 var/data_out/db.sqlite
 sqlite> -- The default most is csv, which is not pretty.
 sqlite> .mode columns
@@ -158,6 +162,8 @@ sqlite> .quit
 
 ```bash
 $ sqlite3 var/data_out/db.sqlite -header -column 'SELECT mood_label, date FROM daylio LIMIT 5;'
+```
+```
 mood_label  date
 ----------  ----------
 happy       2018-03-30
@@ -174,6 +180,23 @@ $ sqlite3 var/data_out/db.sqlite -header -csv \
     'SELECT mood_label, date FROM daylio LIMIT 5;' > path/to/report.csv
 ```
 
+## Mood report
+
+```bash
+$ ./mood_report.py
+```
+```
+mood_score
+mean: 3.35
+median: 3.00
+          mood_score  count
+horrible           1     33
+sad                2    178
+average            3    467
+happy              4    546
+amazing            5     75
+```
+
 
 ## Fit a stats model
 
@@ -184,8 +207,9 @@ The [fit_model.py](/dayiopy/fit_model.py) script performs the following steps:
 3. Print model stats, to better under factors influencing mood.
 
 ```bash
-$ cd dayliopy
 $ ./fit_model.py
+```
+```
                             OLS Regression Results
 ==============================================================================
 Dep. Variable:             mood_score   R-squared:                       0.955
