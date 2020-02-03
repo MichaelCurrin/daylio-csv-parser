@@ -81,7 +81,7 @@ Note that this will overwrite the existing output file. This should be fine thou
 ```bash
 $ cd <PATH_TO_REPO>/dayliopy
 $ source ../venv/bin/activate
-$ (venv) python clean_csv.py
+$ (venv) ./clean_csv.py
 Reading CSV: /home/.../.../daylio-csv-parser/dayliopy/var/data_in/daylio_export.csv
 Replacing activities column with multiple activity columns
 Writing cleaned CV to: /home/.../.../daylio-csv-parser/dayliopy/var/data_out/cleaned.csv
@@ -180,7 +180,7 @@ The [fit_model.py](/dayiopy/fit_model.py) script performs the following steps:
 
 ```bash
 $ cd path/to/repo/dayliopy
-$ (venv) python fit_model.py
+$ (venv) ./fit_model.py
                             OLS Regression Results
 ==============================================================================
 Dep. Variable:             mood_score   R-squared:                       0.955

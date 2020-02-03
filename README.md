@@ -16,18 +16,16 @@ See [Usage Instructions](docs/usage.md) doc for more detailed steps.
 
 ### Main feature
 
-Run the main script to read CSV exported from Daylio at a configured location and create a clean CSV.
-
-_TODO Use executables_
+Run the main script to read CSV exported from _Daylio_ at a configured location and create a clean CSV.
 
 ```bash
 $ cd dayliopy
-$ python clean_csv.py
+$ ./clean_csv.py
 ```
 
 ### Other features
 
-These may be run independently, but all require the output from the main feature above.
+These commands may be run independently, but all require the output from the main feature above.
 
 Create a database file from the cleaned CSV.
 
@@ -44,13 +42,13 @@ TODO Centralize CSV date parsing
 View a report around mood score aggregate stats.
 
 ```bash
-$ python mood_report.py
+$ ./mood_report.py
 ```
 
 View a report on a stats model fitted your data.
 
 ```bash
-$ python fit_model.py
+$ ./fit_model.py
 ```
 
 ## Meta
