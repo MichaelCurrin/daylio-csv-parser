@@ -126,9 +126,8 @@ def clean_csv(csv_in, csv_out):
 
 
 def main():
-    """Main command-line function.
-
-    TODO: Process command-line args, but for now only use default values.
+    """
+    Main command-line function.
     """
     csv_in = conf.get('data', 'source_csv')
     csv_out = conf.get('data', 'cleaned_csv')

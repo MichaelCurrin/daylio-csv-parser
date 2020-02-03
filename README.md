@@ -33,12 +33,6 @@ Create a database file from the cleaned CSV.
 $ sqlite3 var/data_out/db.sqlite < ../tools/setup_db.sql
 ```
 
-TODO Streamline - a new or fixed CSV means above steps need to be redone and then the next ones.
-Delete file? Repeat import didn't clear entry.
-Actually not used, just CLEANED CSV is reread.
-
-TODO Centralize CSV date parsing
-
 View a report around mood score aggregate stats.
 
 ```bash
