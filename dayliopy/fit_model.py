@@ -50,7 +50,6 @@ def prepare_data(df):
         inplace=True,
         verify_integrity=True
     )
-    # TODO Why is month 1 missing across years?
     df['month_num'] = df.index.month
     df['year'] = df.index.year
 
