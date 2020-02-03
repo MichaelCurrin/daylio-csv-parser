@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """
 Mood report application file.
 """
@@ -72,9 +73,8 @@ def make_report(csv_in_path):
 
 
 def main():
-    """Main command-line function.
-
-    TODO: Use argparse to read in a custom value rather than use the default.
+    """
+    Main command-line function.
     """
     csv_in_path = conf.get('data', 'cleaned_csv')
 

@@ -2,6 +2,13 @@
 
 If you have followed the [Installation Instructions](installation.md) and have the **Daylio premium mode** activated, you may continue with the usage instructions here.
 
+This doc assumes you have activate the virtual environment and are in the app directory
+
+```bash
+$ cd <PATH_TO_REPO>
+$ source venv/bin/activate
+$ cd dayliopy
+```
 
 ## Configuration
 
@@ -33,7 +40,7 @@ mood2: sad
 mood1: horrible
 ```
 
-Even though the Daylio mobile app does allow more, a maximum of 5 mood levels is allowed in this application. Any others will raise an error.
+Even though the _Daylio_ mobile app does allow more, a maximum of 5 mood levels is allowed in this application. Any others will raise an error.
 
 
 ## Clean a CSV
@@ -79,20 +86,20 @@ Use the commands below to read in the above export file, clean the data and writ
 Note that this will overwrite the existing output file. This should be fine though, since the input file always contains all data to date.
 
 ```bash
-$ cd <PATH_TO_REPO>/dayliopy
-$ source ../venv/bin/activate
-$ (venv) python clean_csv.py
-Reading CSV: /home/.../.../daylio-csv-parser/dayliopy/var/data_in/daylio_export.csv
+$ ./clean_csv.py
+```
+```
+Reading CSV: .../daylio-csv-parser/dayliopy/var/data_in/daylio_export.csv
 Replacing activities column with multiple activity columns
-Writing cleaned CV to: /home/.../.../daylio-csv-parser/dayliopy/var/data_out/cleaned.csv
+Writing cleaned CV to: .../daylio-csv-parser/dayliopy/var/data_out/cleaned.csv
 ```
 
 Example values for a row of the output CSV:
 
-| timestamp | datetime | date | weekday_label | weekday_num | mood_label | mood_score | clean | cook | music | stressed | note |
-|--------------|---------------------|------------|---------------|-------------|------------|------------|-------|------|-------|-----------------------|-----------------|
-| 1522444920.0 | 2018-03-30 23:22:00 | 2018-03-30 | Friday | 4 | average | 3 | 1 | 0 | 0 | 1 | Did a roadtrip. |
-| 1522360440.0 | 2018-03-29 23:54:00 | 2018-03-29 | Thursday | 3 | happy | 4 | 0 | 1 | 0 | 0 |  |
+| timestamp    | datetime            | date       | weekday_label | weekday_num | mood_label | mood_score | clean | cook | music | stressed | note            |
+| ------------ | ------------------- | ---------- | ------------- | ----------- | ---------- | ---------- | ----- | ---- | ----- | -------- | --------------- |
+| 1522444920.0 | 2018-03-30 23:22:00 | 2018-03-30 | Friday        | 4           | average    | 3          | 1     | 0    | 0     | 1        | Did a roadtrip. |
+| 1522360440.0 | 2018-03-29 23:54:00 | 2018-03-29 | Thursday      | 3           | happy      | 4          | 0     | 1    | 0     | 0        |                 |
 
 _Formatted using [markdown table tool](https://www.tablesgenerator.com/markdown_tables)._
 
@@ -109,9 +116,12 @@ Use SQLite to create a database and a new table called _daylio_.
 
 ```bash
 $ cd <PATH_TO_REPO>/dayliopy
+
 $ # Create new empty db file if none exists. Use the project's setup script
   # to import from the default cleaned CSV file location.
 $ sqlite3 var/data_out/db.sqlite < ../tools/setup_db.sql
+
+$ # View the schema.
 $ sqlite3 var/data_out/db.sqlite '.schema'
 CREATE TABLE daylio(
   "timestamp" TEXT,
@@ -137,7 +147,6 @@ SQLite's default behavior it to set the affinity for each column to TEXT (see [D
 #### Query using SQLite interactive mode.
 
 ```bash
-$ cd path/to/repo/dayliopy
 $ sqlite3 var/data_out/db.sqlite
 sqlite> -- The default most is csv, which is not pretty.
 sqlite> .mode columns
@@ -153,6 +162,8 @@ sqlite> .quit
 
 ```bash
 $ sqlite3 var/data_out/db.sqlite -header -column 'SELECT mood_label, date FROM daylio LIMIT 5;'
+```
+```
 mood_label  date
 ----------  ----------
 happy       2018-03-30
@@ -169,6 +180,23 @@ $ sqlite3 var/data_out/db.sqlite -header -csv \
     'SELECT mood_label, date FROM daylio LIMIT 5;' > path/to/report.csv
 ```
 
+## Mood report
+
+```bash
+$ ./mood_report.py
+```
+```
+mood_score
+mean: 3.35
+median: 3.00
+          mood_score  count
+horrible           1     33
+sad                2    178
+average            3    467
+happy              4    546
+amazing            5     75
+```
+
 
 ## Fit a stats model
 
@@ -179,8 +207,9 @@ The [fit_model.py](/dayiopy/fit_model.py) script performs the following steps:
 3. Print model stats, to better under factors influencing mood.
 
 ```bash
-$ cd path/to/repo/dayliopy
-$ (venv) python fit_model.py
+$ ./fit_model.py
+```
+```
                             OLS Regression Results
 ==============================================================================
 Dep. Variable:             mood_score   R-squared:                       0.955
@@ -209,4 +238,11 @@ Prob(Omnibus):                  0.045   Jarque-Bera (JB):                6.075
 Skew:                           0.206   Prob(JB):                       0.0480
 Kurtosis:                       3.166   Cond. No.                         20.0
 ==============================================================================
+```
+
+
+## Development
+
+```bash
+$ pylint *
 ```
