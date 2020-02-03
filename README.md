@@ -13,14 +13,13 @@ See the [Installation Instructions](docs/installation.md) doc.
 
 ## Usage example
 
-See [Usage Instructions](docs/usage.md) doc for more detailed steps. An overview of usage is covered below.
+A summary of the command-line API is covered below (assuming that you are in the app directory with an activated environment). See [Usage Instructions](docs/usage.md) doc for more detailed steps.
 
 ### Main feature
 
 Run the main script to read CSV exported from _Daylio_ at a configured location and create a clean CSV.
 
 ```bash
-$ cd dayliopy
 $ ./clean_csv.py
 ```
 
