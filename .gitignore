@@ -1,12 +1,8 @@
 # Python compiled binaries.
 __pycache__/
 
-
-# Python virtual environment as directory or symlink.
-venv/
+# Python virtual environment.
 venv
-virtualenv/
-virtualenv
 
 # Local configuration and model files.
 *.local.conf
