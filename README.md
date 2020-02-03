@@ -1,9 +1,9 @@
 # Daylio CSV Parser
 >Improve the usability of the Daylio CSV export and explore reports around your data.
 
-[What is Daylio?](docs/what_is_daylio.md)
+What is [Daylio](docs/what_is_daylio.md)?
 
-This _dayliopy_ application parses a CSV exported from Daylio (in premium mode) to create a more useful CSV. In particular, the _activities_ column with multiple activities listed in a single cell is split out into multiple columns, with appropriate names and values as `0` or `1`.
+This _dayliopy_ application parses a CSV exported from _Daylio_ (in premium mode) to create a more useful CSV. In particular, the _activities_ column with multiple activities listed in a single cell is split out into multiple columns, with appropriate names and values as `0` or `1`.
 
 For interest, see related mood tracking projects by other developers [here](docs/related_projects.md).
 
