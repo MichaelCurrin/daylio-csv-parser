@@ -13,7 +13,8 @@ conf = AppConf()
 
 
 def clean_row(row, default_activities):
-    """Expect a CSV row and default activities and return cleaned row.
+    """
+    Expect a CSV row and default activities and return cleaned row.
 
     @param row: dict of values as read from source CSV.
     @param default_activities: list of activities, initialised to default
@@ -34,6 +35,7 @@ def clean_row(row, default_activities):
 
     # Match the mood label against the configured label and numeric value.
     mood = row['mood'].strip()
+
     try:
         mood_score = conf.MOODS[mood]
     except KeyError as e:
@@ -60,7 +62,8 @@ def clean_row(row, default_activities):
 
 
 def clean_csv(csv_in, csv_out):
-    """Read, clean and write data.
+    """
+    Read, clean and write data.
 
     The available activities set must be populated on the first pass through
     the input data, where an activity enters a set the first time is
@@ -112,12 +115,13 @@ def clean_csv(csv_in, csv_out):
         'mood_score',
         'note'
     ]
+
     activity_columns = sorted(list(available_activities))
     # For readability of the CSV, insert the dynamic acitvity values before
     # the text note.
     out_fields[-1:-1] = activity_columns
 
-    print("Writing cleaned CV to: {}".format(csv_out))
+    print(f"Writing cleaned CV to: {csv_out}"))
 
     with open(csv_out, 'w') as f_out:
         writer = csv.DictWriter(f_out, fieldnames=out_fields)
