@@ -18,11 +18,16 @@ import pandas as pd
 import statsmodels.api
 
 from lib.config import AppConf
+
 conf = AppConf()
+
+DROP_COLUMNS = ('timestamp', 'date', 'weekday_label', 'mood_label', 'note')
+OLD_TIME_COLUMNS = ('weekday_num', 'month_num', 'year')
 
 
 def prepare_data(df):
-    """Prepare data for model fitting.
+    """
+    Prepare data for model fitting.
 
     Expect cleaned Daylio data as DataFrame, remove unneccessary columns, apply
     one-hot encoding to split certain variables into numeric columns (removing
@@ -38,13 +43,15 @@ def prepare_data(df):
 
     @return df: Dataframe of encoded data.
     """
-    # Remove time and text columns which are not needed for training.
+    # Remove time and text columns not needed for training.
     df.drop(
-        ['timestamp', 'date', 'weekday_label', 'mood_label', 'note', ],
+        DROP_COLUMNS,
         axis=1,
         inplace=True
     )
+
     df['datetime'] = pd.to_datetime(df.datetime)
+
     df.set_index(
         'datetime',
         inplace=True,
@@ -74,7 +81,7 @@ def prepare_data(df):
     df[list(encoded_years.columns)] = encoded_years
 
     df.drop(
-        ['weekday_num', 'month_num', 'year'],
+        OLD_TIME_COLUMNS,
         axis=1,
         inplace=True
     )
@@ -83,7 +90,8 @@ def prepare_data(df):
 
 
 def fit(csv_in_path):
-    """Fit an Ordinary Least Squares model to input Daylio data and return it.
+    """
+    Fit an Ordinary Least Squares model to input Daylio data and return it.
 
     @param csv_in_path: Path to cleaned CSV.
 
