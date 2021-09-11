@@ -1,17 +1,21 @@
 # Daylio CSV Parser
->Improve the usability of the Daylio CSV export and explore reports around your data.
+> Improve the usability of the Daylio CSV export and explore reports around your data
 
-What is [Daylio](docs/what_is_daylio.md)?
+[![Made with Python](https://img.shields.io/badge/Python->=3.6-blue?logo=python&logoColor=white)](https://python.org)
+
+What is [Daylio](/docs/what_is_daylio.md)?
 
 This _dayliopy_ application parses a CSV exported from _Daylio_ (in premium mode) to create a more useful CSV. In particular, the _activities_ column with multiple activities listed in a single cell is split out into multiple columns, with appropriate names and values as `0` or `1`.
 
-For interest, see related mood tracking projects by other developers [here](docs/related_projects.md).
+For interest, see related mood tracking projects by other developers [here](/docs/related_projects.md).
+
 
 ## Installation
 
-See the [Installation Instructions](docs/installation.md) doc.
+See the [Installation Instructions](/docs/installation.md) doc.
 
-## Usage example
+
+## Usage
 
 A summary of the command-line API is covered below (assuming that you are in the app directory with an activated environment). See [Usage Instructions](docs/usage.md) doc for more detailed steps.
 
@@ -31,7 +35,7 @@ Assuming you have created a clean CSV using the step above, you can run any of t
 
 Create a database file from the cleaned CSV. You can then access data in the database.
 
-```bash
+```sh
 $ sqlite3 var/data_out/db.sqlite < ../tools/setup_db.sql
 ```
 
@@ -39,7 +43,7 @@ $ sqlite3 var/data_out/db.sqlite < ../tools/setup_db.sql
 
 View a report around mood score aggregate stats.
 
-```bash
+```sh
 $ ./mood_report.py
 ```
 
@@ -47,10 +51,11 @@ $ ./mood_report.py
 
 View a report on a stats model which was fitted your data.
 
-```bash
+```sh
 $ ./fit_model.py
 ```
 
+
 ## License
 
-Distributed under the MIT license. See [LICENSE](LICENSE) for more information.
+Distributed under the MIT license. See [LICENSE](/LICENSE) for more information.
