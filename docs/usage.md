@@ -1,4 +1,4 @@
-# Usage Instructions
+# Usage
 
 If you have followed the [Installation Instructions](installation.md) and have the **Daylio premium mode** activated, you may continue with the usage instructions here.
 
