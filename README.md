@@ -1,4 +1,4 @@
-# Daylio CSV Parser
+# Daylio CSV Parser ☺️ 📆 🐍
 > Improve the usability of the Daylio CSV export and explore reports around your data
 
 [![GitHub tag](https://img.shields.io/github/tag/MichaelCurrin/daylio-csv-parser?include_prereleases=&sort=semver&color=blue)](https://github.com/MichaelCurrin/daylio-csv-parser/releases/)
