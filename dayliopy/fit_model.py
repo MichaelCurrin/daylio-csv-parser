@@ -42,6 +42,7 @@ def prepare_data(df):
 
     @return df: Dataframe of encoded data.
     """
+    # FIXME: KeyError: "[('timestamp', 'date', 'weekday_label', 'mood_label', 'note')] not found in axis"
     # Remove time and text columns not needed for training.
     df.drop(DROP_COLUMNS, axis=1, inplace=True)
 
