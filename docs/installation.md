@@ -5,7 +5,7 @@
 
 ### Python
 
-Python 3.5 or above is recommended.
+Python 3.6 or above.
 
 **Debian/Ubuntu**
 
@@ -61,9 +61,7 @@ $ source venv/bin/activate
 Install packages:
 
 ```bash
-$ pip install pip --upgrade
-$ pip install -r requirements.txt
-$ pip install -r requirements-dev.txt
+$ make install
 ```
 
 You can now continue to the [Usage](/docs/usage.md) doc.
