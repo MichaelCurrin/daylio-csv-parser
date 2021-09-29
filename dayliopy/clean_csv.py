@@ -24,7 +24,9 @@ def clean_row(row, default_activities):
         are fixed and also fields which are dynamic, based on activities
         which are used.
     """
-    datetime_str = "{date} {time}".format(date=row["full_date"], time=row["time"])
+    date = row["full_date"]
+    time = row["time"]
+    datetime_str = f"{date} {time}"
     datetime_obj = datetime.datetime.strptime(datetime_str, r"%Y-%m-%d %I:%M %p")
 
     # Match the mood label against the configured label and numeric value.
@@ -34,9 +36,9 @@ def clean_row(row, default_activities):
         mood_score = conf.MOODS[mood]
     except KeyError as e:
         raise type(e)(
-            "Each mood label must be added to a conf file so that"
-            " it can be assigned a numeric value. Not found:"
-            " {}".format(mood)
+            f"Each mood label in your CS must be added to a conf file so that"
+            f" it can be assigned a numeric value. Not found:"
+            f" {mood}. Configured moods: {conf.MOODS}"
         )
 
     row_activities = default_activities.copy()
