@@ -5,4 +5,4 @@ DROP TABLE IF EXISTS daylio;
 .mode csv
 
 /* Usage: .import FILE TABLE */
-.import var / data_out / cleaned.csv daylio
+.import 'var/data_out/cleaned.csv' daylio
