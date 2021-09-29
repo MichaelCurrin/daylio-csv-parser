@@ -9,46 +9,9 @@ $ cd PATH_TO_REPO
 $ source venv/bin/activate
 ```
 
-
-## Configuration
-
-This project uses Python's built-in [ConfigParser](https://docs.python.org/3/library/configparser.html) format, which is easy for end-users to edit.
-
-The [clean_csv.py](/dayiopy/clean_csv.py) script will dynamically handle any number of activities in the _activities_ column without any configuration needed. However, the labels for moods should be configured, as below. Also, you may optionally override any paths for CSV and db files.
-
-View the built-in [app.conf](/dayliopy/etc/app.conf) config file to see what options can be set.
-
-```bash
-$ view dayliopy/etc/app.conf
-```
-
-Create an unversioned local config file, to override fields in `app.conf`.
-
-```bash
-$ nano dayliopy/etc/app.local.conf
-```
-
-Example content:
-
-- `app.local.conf`
-    ```
-    # Local config file.
-    #
-
-    [daylio]
-    # Labels for high to low moods.
-    mood5: amazing
-    mood2: sad
-    mood1: horrible
-    ```
-
-Even though the _Daylio_ mobile app does allow more, a maximum of 5 mood levels is allowed in this application. Any others will raise an error.
-
-
-## Clean a CSV
+## Parse a CSV
 
 This section covers the main feature of this project. The later features require this _Clean a CSV_ sections steps to be completed first.
-
 
 ### 1. Export your data
 
@@ -59,21 +22,7 @@ Export the data on your mobile device.
 1. Tap _Export Entries_.
 1. Select a download option such as e-mail, Google Drive or Dropbox.
 
-You will now have a file named `daylio_export.csv` which contains all your entries from the most recent back to the first.
-
-Format of the export:
-
-- `daylio_export.csv`
-    ```
-    year,date,weekday,time,mood,activities,note
-    2018,18 May,Friday,11:54 pm,happy,"clean | cook | music","Went to a party"
-    2018,17 May,Wednesday,10:21 pm,average,"cook | stressed ",""
-    2018,16 May,Tuesday,11:41 pm,horrible,"","Did nothing today."
-    ```
-
-The CSV always has 7 columns, however, the _activities_ value needs further processing to make it easy to handle in a CSV editor. That is the reason for this project.
-
-Each activity is separated by a pipe symbol and there may be no activities an empty string, or all the available activities may be used. The activities may be a mixture of the built-in labels and the ones defined by a user.
+You will now have a file named `daylio_export.csv` which contains all your entries from the most recent back to the first. See [CSV format](/docs/csv-format.md) for more info.
 
 Download the file on your computer and then move CSV to _dayliopy's_ configured CSV input location.
 
