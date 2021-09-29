@@ -25,10 +25,21 @@ def clean_row(row, default_activities):
         are fixed and also fields which are dynamic, based on activities
         which are used.
     """
-    date = row["full_date"]
-    time = row["time"]
-    datetime_str = f"{date} {time}"
-    datetime_obj = datetime.datetime.strptime(datetime_str, r"%Y-%m-%d %I:%M %p")
+    datetime_str = "{date} {time}".format(
+        date=row['full_date'],
+        time=row['time']
+    )
+    # Detect if time is 24H or 12H time.
+    datetime_format = ""
+    if 'm' in datetime_str:
+        datetime_format = r"%Y-%m-%d %I:%M %p"
+    else: 
+        datetime_format = r"%Y-%m-%d %H:%M"
+
+    datetime_obj = datetime.datetime.strptime(
+        datetime_str,
+        datetime_format
+    )
 
     # Match the mood label against the configured label and numeric value.
     mood = row["mood"].strip()
