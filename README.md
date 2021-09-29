@@ -28,7 +28,7 @@ A summary of the command-line API is covered below.
 Run the main script to read CSV exported from _Daylio_ at a configured location and create a clean CSV.
 
 ```bash
-$ ./clean_csv.py
+$ make csv
 ```
 
 ### Other features
@@ -40,7 +40,7 @@ Assuming you have created a clean CSV using the step above, you can run any of t
 Create a database file from the cleaned CSV. You can then access data in the database.
 
 ```sh
-$ sqlite3 var/data_out/db.sqlite < ../tools/setup_db.sql
+$ make db
 ```
 
 #### Aggregate mood report
