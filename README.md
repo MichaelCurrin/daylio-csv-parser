@@ -10,13 +10,13 @@
 
 ## About
 
-What is Daylio? Read in this [doc](/docs/what_is_daylio.md).
+What is Daylio? Read in this [doc](/docs/what-is-daylio.md).
 
 This _dayliopy_ application parses a CSV exported from _Daylio_ (in premium mode) to create a more useful CSV.
 
 In particular, the _activities_ column with multiple activities listed in a single cell is split out into multiple columns, with appropriate names and values as `0` or `1`.
 
-For interest, see related mood tracking projects by other developers [here](/docs/related_projects.md).
+For interest, see related mood tracking projects by other developers [here](/docs/related-projects.md).
 
 
 ## Sample usage
