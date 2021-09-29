@@ -1,10 +1,5 @@
 # Installation
 
-## Clone the repo
-
-```bash
-$ git clone git@github.com:MichaelCurrin/daylio-csv-parser.git
-```
 
 ## Install system dependencies
 
@@ -41,6 +36,13 @@ $ sudo apt-get update sqlite3
 ```bash
 $ brew install sqlite3
 ```
+
+## Clone
+
+```bash
+$ git clone git@github.com:MichaelCurrin/daylio-csv-parser.git
+```
+
 
 ## Install project dependencies
 
