@@ -1,23 +1,27 @@
 # Daylio CSV Parser
 > Improve the usability of the Daylio CSV export and explore reports around your data
 
+[![GitHub tag](https://img.shields.io/github/tag/MichaelCurrin/daylio-csv-parser?include_prereleases=&sort=semver&color=blue)](https://github.com/MichaelCurrin/daylio-csv-parser/releases/)
+[![License](https://img.shields.io/badge/License-MIT-blue)](#license)
+
 [![Made with Python](https://img.shields.io/badge/Python->=3.6-blue?logo=python&logoColor=white)](https://python.org)
+[![Made with SQLite](https://img.shields.io/badge/SQLite-3-blue?logo=sqlite&logoColor=white)](https://www.sqlite.org/index.html)
 
-What is [Daylio](/docs/what_is_daylio.md)?
 
-This _dayliopy_ application parses a CSV exported from _Daylio_ (in premium mode) to create a more useful CSV. In particular, the _activities_ column with multiple activities listed in a single cell is split out into multiple columns, with appropriate names and values as `0` or `1`.
+## About
+
+What is Daylio? Read in this [doc](/docs/what_is_daylio.md).
+
+This _dayliopy_ application parses a CSV exported from _Daylio_ (in premium mode) to create a more useful CSV.
+
+In particular, the _activities_ column with multiple activities listed in a single cell is split out into multiple columns, with appropriate names and values as `0` or `1`.
 
 For interest, see related mood tracking projects by other developers [here](/docs/related_projects.md).
 
 
-## Installation
+## Sample usage
 
-See the [Installation Instructions](/docs/installation.md) doc.
-
-
-## Usage
-
-A summary of the command-line API is covered below (assuming that you are in the app directory with an activated environment). See [Usage Instructions](docs/usage.md) doc for more detailed steps.
+A summary of the command-line API is covered below.
 
 ### Main feature
 
@@ -56,6 +60,15 @@ $ ./fit_model.py
 ```
 
 
+## Documentation
+
+<div align="center">
+
+[![view - Documentation](https://img.shields.io/badge/view-Documentation-blue?style=for-the-badge)](/docs/ "Go to docs")
+
+</div>
+
+
 ## License
 
-Distributed under the MIT license. See [LICENSE](/LICENSE) for more information.
+Released under [MIT](/LICENSE) by [@MichaelCurrin](https://github.com/MichaelCurrin).
