@@ -121,7 +121,7 @@ def clean_csv(csv_in, csv_out):
     # the text note.
     out_fields[-1:-1] = activity_columns
 
-    print(f"Writing cleaned CV to: {csv_out}"))
+    print(f"Writing cleaned CV to: {csv_out}")
 
     with open(csv_out, 'w') as f_out:
         writer = csv.DictWriter(f_out, fieldnames=out_fields)
