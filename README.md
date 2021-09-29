@@ -6,6 +6,8 @@
 
 [![Made with Python](https://img.shields.io/badge/Python->=3.6-blue?logo=python&logoColor=white)](https://python.org)
 [![Made with SQLite](https://img.shields.io/badge/SQLite-3-blue?logo=sqlite&logoColor=white)](https://www.sqlite.org/index.html)
+[![dependency - statsmodels](https://img.shields.io/badge/dependency-statsmodels-blue)](https://pypi.org/project/statsmodels)
+[![dependency - pandas](https://img.shields.io/badge/dependency-pandas-blue)](https://pypi.org/project/pandas)
 
 
 ## About
