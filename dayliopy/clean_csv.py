@@ -28,9 +28,16 @@ def clean_row(row, default_activities):
         date=row['full_date'],
         time=row['time']
     )
+    # Detect if time is 24H or 12H time.
+    datetime_format = ""
+    if 'm' in datetime_str:
+        datetime_format = r"%Y-%m-%d %I:%M %p"
+    else: 
+        datetime_format = r"%Y-%m-%d %H:%M"
+
     datetime_obj = datetime.datetime.strptime(
         datetime_str,
-        r"%Y-%m-%d %I:%M %p"
+        datetime_format
     )
 
     # Match the mood label against the configured label and numeric value.
