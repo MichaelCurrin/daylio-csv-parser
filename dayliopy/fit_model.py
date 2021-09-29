@@ -16,13 +16,12 @@ direction of the factor's influence on the mood score.
 """
 import pandas as pd
 import statsmodels.api
-
 from lib.config import AppConf
 
 conf = AppConf()
 
-DROP_COLUMNS = ('timestamp', 'date', 'weekday_label', 'mood_label', 'note')
-OLD_TIME_COLUMNS = ('weekday_num', 'month_num', 'year')
+DROP_COLUMNS = ("timestamp", "date", "weekday_label", "mood_label", "note")
+OLD_TIME_COLUMNS = ("weekday_num", "month_num", "year")
 
 
 def prepare_data(df):
@@ -44,47 +43,25 @@ def prepare_data(df):
     @return df: Dataframe of encoded data.
     """
     # Remove time and text columns not needed for training.
-    df.drop(
-        DROP_COLUMNS,
-        axis=1,
-        inplace=True
-    )
+    df.drop(DROP_COLUMNS, axis=1, inplace=True)
 
-    df['datetime'] = pd.to_datetime(df.datetime)
+    df["datetime"] = pd.to_datetime(df.datetime)
 
-    df.set_index(
-        'datetime',
-        inplace=True,
-        verify_integrity=True
-    )
-    df['month_num'] = df.index.month
-    df['year'] = df.index.year
+    df.set_index("datetime", inplace=True, verify_integrity=True)
+    df["month_num"] = df.index.month
+    df["year"] = df.index.year
 
     encoded_weekdays = pd.get_dummies(
-        df['weekday_num'],
-        prefix='weekday',
-        drop_first=True
+        df["weekday_num"], prefix="weekday", drop_first=True
     )
-    encoded_months = pd.get_dummies(
-        df['month_num'],
-        prefix='month',
-        drop_first=True
-    )
-    encoded_years = pd.get_dummies(
-        df['year'],
-        prefix='year',
-        drop_first=True
-    )
+    encoded_months = pd.get_dummies(df["month_num"], prefix="month", drop_first=True)
+    encoded_years = pd.get_dummies(df["year"], prefix="year", drop_first=True)
 
     df[list(encoded_weekdays.columns)] = encoded_weekdays
     df[list(encoded_months.columns)] = encoded_months
     df[list(encoded_years.columns)] = encoded_years
 
-    df.drop(
-        OLD_TIME_COLUMNS,
-        axis=1,
-        inplace=True
-    )
+    df.drop(OLD_TIME_COLUMNS, axis=1, inplace=True)
 
     return df
 
@@ -101,9 +78,9 @@ def fit(csv_in_path):
 
     encoded_df = prepare_data(df)
 
-    y = encoded_df['mood_score']
+    y = encoded_df["mood_score"]
     X = encoded_df.drop(
-        ['mood_score'],
+        ["mood_score"],
         axis=1,
     )
     return statsmodels.api.OLS(y, X).fit()
@@ -113,12 +90,12 @@ def main():
     """
     Main command-line function.
     """
-    csv_in_path = conf.get('data', 'cleaned_csv')
+    csv_in_path = conf.get("data", "cleaned_csv")
     model = fit(csv_in_path)
 
     # Note the signs and sizes of the co-efficients.
     print(model.summary())
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
