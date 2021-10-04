@@ -1,16 +1,11 @@
 # Installation
 
-## Clone the repo
-
-```bash
-$ git clone git@github.com:MichaelCurrin/daylio-csv-parser.git
-```
 
 ## Install system dependencies
 
 ### Python
 
-Python 3.5 or above is recommended.
+Python 3.6 or above.
 
 **Debian/Ubuntu**
 
@@ -42,6 +37,13 @@ $ sudo apt-get update sqlite3
 $ brew install sqlite3
 ```
 
+## Clone
+
+```bash
+$ git clone git@github.com:MichaelCurrin/daylio-csv-parser.git
+```
+
+
 ## Install project dependencies
 
 It is usually best-practice in _Python_ projects to install into a sandboxed _virtual environment_, This will be locked to a specific Python version and contain only the _Python_ libraries that you install into it, so that your _Python_ projects do not get affected.
@@ -59,9 +61,7 @@ $ source venv/bin/activate
 Install packages:
 
 ```bash
-$ pip install pip --upgrade
-$ pip install -r requirements.txt
-$ pip install -r requirements-dev.txt
+$ make install
 ```
 
 You can now continue to the [Usage](/docs/usage.md) doc.

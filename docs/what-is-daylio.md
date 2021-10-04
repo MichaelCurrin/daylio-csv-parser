@@ -2,7 +2,7 @@
 
 Daylio is mobile app and their [website](https://daylio.webflow.io/) says:
 
->"Daylio enables you to keep a private diary without having to write a single line".
+> "Daylio enables you to keep a private diary without having to write a single line".
 
 Entries are created at a specific date and time and may have the following attributes:
 
