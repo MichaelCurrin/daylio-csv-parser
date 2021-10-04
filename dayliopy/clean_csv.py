@@ -8,8 +8,8 @@ import csv
 import datetime
 import codecs
 
-
 from lib.config import AppConf
+
 conf = AppConf()
 
 
@@ -25,45 +25,43 @@ def clean_row(row, default_activities):
         are fixed and also fields which are dynamic, based on activities
         which are used.
     """
-    datetime_str = "{date} {time}".format(
-        date=row['full_date'],
-        time=row['time']
-    )
+    date = row["full_date"]
+    time = row["time"]
+    datetime_str = f"{date} {time}"
+
     # Detect if time is 24H or 12H time.
     datetime_format = ""
     if 'm' in datetime_str:
         datetime_format = r"%Y-%m-%d %I:%M %p"
     else: 
         datetime_format = r"%Y-%m-%d %H:%M"
-
-    datetime_obj = datetime.datetime.strptime(
-        datetime_str,
-        datetime_format
-    )
+    datetime_obj = datetime.datetime.strptime(datetime_str, datetime_format)
 
     # Match the mood label against the configured label and numeric value.
-    mood = row['mood'].strip()
+    mood = row["mood"].strip()
 
     try:
         mood_score = conf.MOODS[mood]
     except KeyError as e:
-        raise type(e)("Each mood label must be added to a conf file so that"
-                      " it can be assigned a numeric value. Not found:"
-                      " {}".format(mood))
+        raise type(e)(
+            f"Each mood label in your CS must be added to a conf file so that"
+            f" it can be assigned a numeric value. Not found:"
+            f" {mood}. Configured moods: {conf.MOODS}"
+        )
 
     row_activities = default_activities.copy()
-    for activity in row['activities']:
+    for activity in row["activities"]:
         row_activities[activity] = 1
 
     out_row = {
-        'timestamp': datetime_obj.timestamp(),
-        'datetime': str(datetime_obj),
-        'date': str(datetime_obj.date()),
-        'weekday_label': row['weekday'],
-        'weekday_num': datetime_obj.weekday(),
-        'mood_label': mood,
-        'mood_score': mood_score,
-        'note': row['note']
+        "timestamp": datetime_obj.timestamp(),
+        "datetime": str(datetime_obj),
+        "date": str(datetime_obj.date()),
+        "weekday_label": row["weekday"],
+        "weekday_num": datetime_obj.weekday(),
+        "mood_label": mood,
+        "mood_score": mood_score,
+        "note": row["note"],
     }
 
     return {**out_row, **row_activities}
@@ -93,7 +91,7 @@ def clean_csv(csv_in, csv_out):
         reader = csv.DictReader(f_in)
 
         for row in reader:
-            activities = row['activities'].split(" | ")
+            activities = row["activities"].split(" | ")
 
             # Ignore row of no activities, which will be a single null string
             # after splitting.
@@ -103,7 +101,7 @@ def clean_csv(csv_in, csv_out):
                 activities = [activity.strip() for activity in activities]
                 available_activities.update(activities)
 
-            row['activities'] = activities
+            row["activities"] = activities
             in_data.append(row)
 
     print("Replacing activities column with multiple activity columns")
@@ -112,14 +110,14 @@ def clean_csv(csv_in, csv_out):
     out_data = [clean_row(row, default_activities.copy()) for row in in_data]
 
     out_fields = [
-        'timestamp',
-        'datetime',
-        'date',
-        'weekday_label',
-        'weekday_num',
-        'mood_label',
-        'mood_score',
-        'note'
+        "timestamp",
+        "datetime",
+        "date",
+        "weekday_label",
+        "weekday_num",
+        "mood_label",
+        "mood_score",
+        "note",
     ]
 
     activity_columns = sorted(list(available_activities))
@@ -129,7 +127,7 @@ def clean_csv(csv_in, csv_out):
 
     print(f"Writing cleaned CV to: {csv_out}")
 
-    with open(csv_out, 'w') as f_out:
+    with open(csv_out, "w") as f_out:
         writer = csv.DictWriter(f_out, fieldnames=out_fields)
         writer.writeheader()
         writer.writerows(out_data)
@@ -139,11 +137,11 @@ def main():
     """
     Main command-line function.
     """
-    csv_in = conf.get('data', 'source_csv')
-    csv_out = conf.get('data', 'cleaned_csv')
+    csv_in = conf.get("data", "source_csv")
+    csv_out = conf.get("data", "cleaned_csv")
 
     clean_csv(csv_in, csv_out)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

@@ -3,9 +3,7 @@
 Mood report application file.
 """
 import pandas as pd
-
 from lib.config import AppConf
-
 
 conf = AppConf()
 
@@ -24,8 +22,8 @@ def print_aggregate_stats(df, column_name):
 
     values = df[column_name]
     stats = {
-        'mean': values.mean(),
-        'median': values.median(),
+        "mean": values.mean(),
+        "median": values.median(),
     }
 
     for k, v in stats.items():
@@ -44,21 +42,14 @@ def get_mood_counts(df):
         ['mood_score', 'count'].
     """
     config_df = pd.DataFrame.from_dict(
-        conf.MOODS,
-        orient='index',
-        columns=['mood_score']
+        conf.MOODS, orient="index", columns=["mood_score"]
     )
-    config_df.sort_values('mood_score', inplace=True)
+    config_df.sort_values("mood_score", inplace=True)
 
-    value_counts = pd.DataFrame(df['mood_label'].value_counts())
-    value_counts.columns = ['count']
+    value_counts = pd.DataFrame(df["mood_label"].value_counts())
+    value_counts.columns = ["count"]
 
-    return pd.merge(
-        config_df,
-        value_counts,
-        left_index=True,
-        right_index=True
-    )
+    return pd.merge(config_df, value_counts, left_index=True, right_index=True)
 
 
 def make_report(csv_in_path):
@@ -69,9 +60,9 @@ def make_report(csv_in_path):
 
     @return: None
     """
-    df = pd.read_csv(csv_in_path, usecols=['mood_label', 'mood_score'])
+    df = pd.read_csv(csv_in_path, usecols=["mood_label", "mood_score"])
 
-    print_aggregate_stats(df, 'mood_score')
+    print_aggregate_stats(df, "mood_score")
     print(get_mood_counts(df))
 
 
@@ -79,10 +70,10 @@ def main():
     """
     Main command-line function.
     """
-    csv_in_path = conf.get('data', 'cleaned_csv')
+    csv_in_path = conf.get("data", "cleaned_csv")
 
     make_report(csv_in_path)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

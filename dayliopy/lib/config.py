@@ -5,7 +5,6 @@ Lib application configuration file.
 import os
 from configparser import ConfigParser
 
-
 from .__init__ import APP_DIR
 
 
@@ -25,31 +24,28 @@ class AppConf(ConfigParser):
         """
         super().__init__()
 
-        etc_conf_names = ('app.conf', 'app.local.conf')
-        conf_paths = [os.path.join(APP_DIR, 'etc', c) for c in etc_conf_names]
+        etc_conf_names = ("app.conf", "app.local.conf")
+        conf_paths = [os.path.join(APP_DIR, "etc", c) for c in etc_conf_names]
 
         user_config_path = os.path.join(
-            os.path.expanduser('~'),
-            '.config',
-            'dayliopy.conf'
+            os.path.expanduser("~"), ".config", "dayliopy.conf"
         )
         conf_paths.append(user_config_path)
 
         self.read(conf_paths)
-        self.set('DEFAULT', 'app_dir', APP_DIR)
+        self.set("DEFAULT", "app_dir", APP_DIR)
 
         self.MOODS = {
-            self.get('daylio', 'mood1'): 1,
-            self.get('daylio', 'mood2'): 2,
-            self.get('daylio', 'mood3'): 3,
-            self.get('daylio', 'mood4'): 4,
-            self.get('daylio', 'mood5'): 5
+            self.get("daylio", "mood1"): 1,
+            self.get("daylio", "mood2"): 2,
+            self.get("daylio", "mood3"): 3,
+            self.get("daylio", "mood4"): 4,
+            self.get("daylio", "mood5"): 5,
         }
 
 
 def test():
-    """Display the values read in across the three conf file locations.
-    """
+    """Display the values read in across the three conf file locations."""
     conf = AppConf()
 
     for section in conf.sections():
@@ -60,5 +56,5 @@ def test():
     print(conf.MOODS)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     test()
