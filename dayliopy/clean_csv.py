@@ -6,6 +6,7 @@ Read in input CSV, clean it and write out to a new CSV.
 """
 import csv
 import datetime
+import codecs
 
 from lib.config import AppConf
 
@@ -90,9 +91,7 @@ def clean_csv(csv_in, csv_out):
 
     print("Reading CSV: {}".format(csv_in))
 
-    with open(csv_in) as f_in:
-        # Ignore first byte which is an unwanted invisible character.
-        f_in.read(1)
+    with codecs.open(csv_in, "r", encoding='utf-8-sig') as f_in:
         reader = csv.DictReader(f_in)
 
         for row in reader:
