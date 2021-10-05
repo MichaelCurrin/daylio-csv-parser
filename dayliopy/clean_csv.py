@@ -31,7 +31,7 @@ def clean_row(row, default_activities):
 
     # Detect if time is 24H or 12H time.
     datetime_format = ""
-    if 'm' in datetime_str:
+    if time.endswith("am") or time.endswith("pm"):
         datetime_format = r"%Y-%m-%d %I:%M %p"
     else: 
         datetime_format = r"%Y-%m-%d %H:%M"
