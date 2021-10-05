@@ -12,6 +12,20 @@ from lib.config import AppConf
 
 conf = AppConf()
 
+def parse_datetime(datetime_str: str) -> datetime.datetime:
+    """
+    Parses a "date time" string into a Datetime object
+
+    @param datetime_str: "date time" string
+
+    @return: Datetime Object
+    """
+    # Detect if time is 24H or 12H time.
+    if datetime_str.endswith("am") or datetime_str.endswith("pm"):
+        datetime_format = r"%Y-%m-%d %I:%M %p"
+    else: 
+        datetime_format = r"%Y-%m-%d %H:%M"
+    return datetime.datetime.strptime(datetime_str, datetime_format)
 
 def clean_row(row, default_activities):
     """
