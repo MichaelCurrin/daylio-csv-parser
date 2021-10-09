@@ -85,6 +85,10 @@ def clean_csv(csv_in, csv_out):
     of 0 (false) for each activity is set. Then a second pass of the data
     is done to set the 1 (true) values for relevant activities of a record.
 
+    Note use of codecs with encoding for Windows support. This also means
+    the hack on Unix to ignore the first byte of unwanted invisible character is
+    no longer needed.
+
     @param csv_in: Path to source CSV file to read in.
     @param csv_out: Path to cleaned CSV file  write out to.
 
