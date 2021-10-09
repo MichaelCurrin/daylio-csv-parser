@@ -28,11 +28,14 @@ CSV_OUT_FIELDS = [
 ]
 
 
-def parse_datetime(dt_str: str) -> datetime.datetime:
+def parse_datetime(date: str, time: str) -> datetime.datetime:
     """
-    :param datetime_str: Date and time in one of two possible formats.
+    :param date: Date in format like '2021-09-28'.
+    :param time: Time in format like '10:00 pm' or '22:00'.
     """
-    is_12h = dt_str.endswith("am") or dt_str.endswith("pm")
+    dt_str = f"{date} {time}"
+
+    is_12h = time.endswith("am") or time.endswith("pm")
     dt_format = DT_12H if is_12h else DT_24H
 
     return datetime.datetime.strptime(dt_str, dt_format)
@@ -85,11 +88,7 @@ def clean_row(row: dict[str, str], default_activities: list[str]) -> dict[str, s
     :return: Row as field names and values. Includes fields which are fixed and
         also fields which are dynamic, based on activities which are used.
     """
-    date = row["full_date"]
-    time = row["time"]
-    datetime_str = f"{date} {time}"
-
-    datetime_obj = parse_datetime(datetime_str)
+    datetime_obj = parse_datetime(row["full_date"], row["time"])
 
     mood = row["mood"]
     mood_score = get_score(mood)
