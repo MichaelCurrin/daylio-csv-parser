@@ -122,6 +122,20 @@ def read_csv(csv_in_path: str):
     return available_activities, in_data
 
 
+def prepare_csv(available_activities, in_data):
+    default_activities = {key: 0 for key in available_activities}
+    out_data = [clean_row(row, default_activities.copy()) for row in in_data]
+
+    out_fields = CSV_OUT_FIELDS.copy()
+    activity_columns = sorted(list(available_activities))
+
+    # For readability of the CSV, insert the dynamic activity values before
+    # the text note at the end.
+    out_fields[-1:-1] = activity_columns
+
+    return out_data, out_fields
+
+
 def write_csv(csv_out_path, out_data, out_fields):
     with open(csv_out_path, "w") as f_out:
         writer = csv.DictWriter(f_out, fieldnames=out_fields)
@@ -150,17 +164,8 @@ def clean_csv(csv_in: str, csv_out: str) -> None:
 
     available_activities, in_data = read_csv(csv_in)
 
-    print("Replacing activities column with multiple activity columns")
-
-    default_activities = {key: 0 for key in available_activities}
-    out_data = [clean_row(row, default_activities.copy()) for row in in_data]
-
-    out_fields = CSV_OUT_FIELDS.copy()
-    activity_columns = sorted(list(available_activities))
-
-    # For readability of the CSV, insert the dynamic activity values before
-    # the text note at the end.
-    out_fields[-1:-1] = activity_columns
+    print("Replacing the activities column with multiple activity columns")
+    out_data, out_fields = prepare_csv(available_activities, in_data)
 
     print(f"Writing cleaned CSV to: {csv_out}")
     write_csv(csv_out, out_data, out_fields)
