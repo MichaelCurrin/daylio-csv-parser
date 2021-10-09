@@ -36,14 +36,13 @@ Use the commands below to read in the above export file, clean the data and writ
 
 Note that this will overwrite the existing output file. This should be fine though, since the input file always contains all data to date.
 
-```bash
+```sh
 $ make csv
 ```
-```
-Reading CSV: .../daylio-csv-parser/dayliopy/var/data_in/daylio_export.csv
-Replacing activities column with multiple activity columns
-Writing cleaned CV to: .../daylio-csv-parser/dayliopy/var/data_out/cleaned.csv
-```
+    python -m dayliopy.clean_csv
+    Reading CSV: /Users/mcurrin/repos/daylio-csv-parser/dayliopy/var/data_in/daylio_export.csv
+    Replacing the activities column with multiple activity columns
+    Writing cleaned CSV to: /Users/mcurrin/repos/daylio-csv-parser/dayliopy/var/data_out/cleaned.csv
 
 Example values for a row of the output CSV:
 
@@ -59,20 +58,21 @@ You can now open the cleaned CSV in a CSV editor and start using it. If you want
 
 ## Mood report
 
-```bash
+```sh
 $ make mood
 ```
-```
-mood_score
-mean: 3.35
-median: 3.00
-          mood_score  count
-horrible           1     33
-sad                2    178
-average            3    467
-happy              4    546
-amazing            5     75
-```
+
+    python -m dayliopy.mood_report
+    mood_score
+    mean: 3.28
+    median: 3.00
+
+    average     926
+    happy       781
+    sad         269
+    amazing      84
+    horrible     49
+    Name: mood_label, dtype: int64
 
 
 ## Fit a stats model
