@@ -38,7 +38,7 @@ def parse_datetime(dt_str: str) -> datetime.datetime:
     return datetime.datetime.strptime(dt_str, dt_format)
 
 
-def parse_mood(mood: str) -> Tuple[str, int]:
+def get_score(mood: str) -> Tuple[str, int]:
     """
     Get mood score.
     """
@@ -54,7 +54,7 @@ def parse_mood(mood: str) -> Tuple[str, int]:
             f" {mood}. Configured moods: {conf.MOODS}"
         )
 
-    return mood, mood_score
+    return mood_score
 
 
 def format_row(
@@ -91,7 +91,8 @@ def clean_row(row: dict[str, str], default_activities: list[str]) -> dict[str, s
 
     datetime_obj = parse_datetime(datetime_str)
 
-    mood, mood_score = parse_mood(row["mood"])
+    mood = row["mood"]
+    mood_score = get_score(mood)
 
     row_activities = default_activities.copy()
 
@@ -130,7 +131,7 @@ def read_csv(csv_in_path: str):
     return available_activities, in_data
 
 
-def prepare_csv(available_activities, in_data):
+def clean_daylio_data(available_activities, in_data):
     """
     Convert Daylio CSV file to a more usable CSV report.
     """
@@ -178,7 +179,7 @@ def process(csv_in: str, csv_out: str) -> None:
     available_activities, in_data = read_csv(csv_in)
 
     print("Replacing the activities column with multiple activity columns")
-    out_data, out_fields = prepare_csv(available_activities, in_data)
+    out_data, out_fields = clean_daylio_data(available_activities, in_data)
 
     print(f"Writing cleaned CSV to: {csv_out}")
     write_csv(csv_out, out_data, out_fields)
