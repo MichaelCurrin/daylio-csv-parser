@@ -7,4 +7,4 @@ RUN pip install -r requirements.txt --no-cache-dir
 
 COPY . .
 
-CMD [ "make", "csv", "mood" ]
+CMD [ "make", "process" ]
