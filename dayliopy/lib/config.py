@@ -5,7 +5,7 @@ Lib application configuration file.
 import os
 from configparser import ConfigParser
 
-from .__init__ import APP_DIR
+from . import APP_DIR
 
 
 class AppConf(ConfigParser):
