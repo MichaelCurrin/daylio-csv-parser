@@ -5,6 +5,7 @@ Mood report application file.
 import pandas as pd
 from lib.config import AppConf
 
+
 conf = AppConf()
 
 

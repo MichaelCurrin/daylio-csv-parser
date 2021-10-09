@@ -18,6 +18,7 @@ import pandas as pd
 import statsmodels.api
 from lib.config import AppConf
 
+
 conf = AppConf()
 
 # Must be lists and pandas now gives an error on a tuple.

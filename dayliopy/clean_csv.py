@@ -11,6 +11,7 @@ from typing import Tuple, Union
 
 from lib.config import AppConf
 
+
 conf = AppConf()
 
 DT_12H = r"%Y-%m-%d %I:%M %p"
