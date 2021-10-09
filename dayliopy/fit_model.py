@@ -38,9 +38,9 @@ def prepare_data(df: pd.Dataframe) -> pd.Dataframe:
     year. Therefore for simplicity, unique year values are split into one-hot
     encoded columns, as with week and month.
 
-    @param df: Dataframe of cleaned input data.
+    :param df: Dataframe of cleaned input data.
 
-    @return df: Dataframe of encoded data.
+    :return df: Dataframe of encoded data.
     """
     # FIXME: KeyError: "[('timestamp', 'date', 'weekday_label', 'mood_label', 'note')] not found in axis"
     # Remove time and text columns not needed for training.
@@ -71,9 +71,9 @@ def fit(csv_in_path: str):
     """
     Fit an Ordinary Least Squares model to input Daylio data and return it.
 
-    @param csv_in_path: Path to cleaned CSV.
+    :param csv_in_path: Path to cleaned CSV.
 
-    @return: None.
+    :return: None.
     """
     df = pd.read_csv(csv_in_path)
 

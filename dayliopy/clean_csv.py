@@ -18,7 +18,7 @@ DT_24H = r"%Y-%m-%d %H:%M"
 
 def parse_datetime(dt_str: str) -> datetime.datetime:
     """
-    @param datetime_str: Date and time in one of two possible formats.
+    :param datetime_str: Date and time in one of two possible formats.
     """
     is_12h = dt_str.endswith("am") or dt_str.endswith("pm")
     dt_format = DT_12H if is_12h else DT_24H
@@ -30,11 +30,11 @@ def clean_row(row: dict[str, str], default_activities: list[str]) -> dict[str, s
     """
     Expect a CSV row and default activities and return cleaned row.
 
-    @param row: dict of values as read from source CSV.
-    @param default_activities: list of activities, initialised to default
+    :param row: dict of values as read from source CSV.
+    :param default_activities: list of activities, initialised to default
         values.
 
-    @return: row as a dict of field names and values. Includes fields which
+    :return: row as a dict of field names and values. Includes fields which
         are fixed and also fields which are dynamic, based on activities
         which are used.
     """
@@ -88,10 +88,10 @@ def clean_csv(csv_in: str, csv_out: str):
     the hack on Unix to ignore the first byte of unwanted invisible character is
     no longer needed.
 
-    @param csv_in: Path to source CSV file to read in.
-    @param csv_out: Path to cleaned CSV file  write out to.
+    :param csv_in: Path to source CSV file to read in.
+    :param csv_out: Path to cleaned CSV file  write out to.
 
-    @return: None
+    :return: None
     """
     available_activities = set()
     in_data = []
