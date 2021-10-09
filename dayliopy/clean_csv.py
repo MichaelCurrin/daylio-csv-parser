@@ -98,7 +98,7 @@ def clean_row(
 
     row_activities = default_activities.copy()
 
-    for activity in row["activities"]:
+    for activity in row["activities_list"]:
         row_activities[activity] = 1
 
     out_row = format_row(row, dt, mood, mood_score)
@@ -106,6 +106,22 @@ def clean_row(
     combined = {**out_row, **row_activities}
 
     return combined
+
+
+def process_activities(activities_str: str) -> list:
+    """
+    Split activities as a pipe-separated string into a list of activities.
+    """
+    activities_split = activities_str.split(" | ")
+
+    # Ignore row of no activities, which will be a single null string
+    # after splitting.
+    if len(activities_split) == 1 and activities_split[0] == "":
+        activities_list = []
+    else:
+        activities_list = [activity.strip() for activity in activities_split]
+
+    return activities_list
 
 
 def read_csv(csv_in_path: str) -> tuple[set[str], list[dict[str, str]]]:
@@ -119,18 +135,12 @@ def read_csv(csv_in_path: str) -> tuple[set[str], list[dict[str, str]]]:
         reader = csv.DictReader(f_in)
 
         for row in reader:
-            activities_str: str = row["activities"]
-            activities_split = activities_str.split(" | ")
+            original_activities_str = row["activities"]
+            activities_list = process_activities(original_activities_str)
 
-            # Ignore row of no activities, which will be a single null string
-            # after splitting.
-            if len(activities_split) == 1 and activities_split[0] == "":
-                activities_list = []
-            else:
-                activities_list = [activity.strip() for activity in activities_split]
-                available_activities.update(activities_list)
+            available_activities.update(activities_list)
 
-            row["activities"] = activities_list
+            row["activities_list"] = activities_list
             in_data.append(row)
 
     return available_activities, in_data
