@@ -16,6 +16,17 @@ conf = AppConf()
 DT_12H = r"%Y-%m-%d %I:%M %p"
 DT_24H = r"%Y-%m-%d %H:%M"
 
+CSV_OUT_FIELDS = [
+    "timestamp",
+    "datetime",
+    "date",
+    "weekday_label",
+    "weekday_num",
+    "mood_label",
+    "mood_score",
+    "note",
+]
+
 
 def parse_datetime(dt_str: str) -> datetime.datetime:
     """
@@ -131,20 +142,11 @@ def clean_csv(csv_in: str, csv_out: str) -> None:
     default_activities = {key: 0 for key in available_activities}
     out_data = [clean_row(row, default_activities.copy()) for row in in_data]
 
-    out_fields = [
-        "timestamp",
-        "datetime",
-        "date",
-        "weekday_label",
-        "weekday_num",
-        "mood_label",
-        "mood_score",
-        "note",
-    ]
-
+    out_fields = CSV_OUT_FIELDS.copy()
     activity_columns = sorted(list(available_activities))
+
     # For readability of the CSV, insert the dynamic activity values before
-    # the text note.
+    # the text note at the end.
     out_fields[-1:-1] = activity_columns
 
     print(f"Writing cleaned CV to: {csv_out}")
