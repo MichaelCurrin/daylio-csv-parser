@@ -1,3 +1,6 @@
+SHELL = /bin/bash
+export PYTHONPATH
+
 APP_DIR = dayliopy
 
 default: install install-dev
@@ -71,3 +74,10 @@ schema:
 interactive:
 	cd $(APP_DIR) \
 		&& sqlite3 var/data_out/db.sqlite
+
+
+container:
+	docker build -t dayliopy .
+	docker run --rm \
+		-v "$(PWD)/dayliopy/var:/usr/src/app/dayliopy/var/" \
+		dayliopy
