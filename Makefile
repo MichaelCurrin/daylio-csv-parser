@@ -1,7 +1,7 @@
 SHELL = /bin/bash
+APP_DIR = dayliopy
 export PYTHONPATH
 
-APP_DIR = dayliopy
 
 default: install install-dev
 
