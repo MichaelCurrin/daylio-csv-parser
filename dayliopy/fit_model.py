@@ -38,12 +38,13 @@ def prepare_data(df: pd.Dataframe) -> pd.Dataframe:
     year. Therefore for simplicity, unique year values are split into one-hot
     encoded columns, as with week and month.
 
-    :param df: Dataframe of cleaned input data.
+    :param df: Cleaned input data.
 
-    :return df: Dataframe of encoded data.
+    :return df: Encoded data.
     """
-    # FIXME: KeyError: "[('timestamp', 'date', 'weekday_label', 'mood_label', 'note')] not found in axis"
-    # Remove time and text columns not needed for training.
+    # FIXME: KeyError: "[('timestamp', 'date', 'weekday_label', 'mood_label',
+    # 'note')] not found in axis"
+    # Remove time and text columns that are not needed for training.
     df.drop(DROP_COLUMNS, axis=1, inplace=True)
 
     df["datetime"] = pd.to_datetime(df.datetime)
@@ -67,13 +68,11 @@ def prepare_data(df: pd.Dataframe) -> pd.Dataframe:
     return df
 
 
-def fit(csv_in_path: str):
+def fit(csv_in_path: str) -> statsmodels.api.OLS:
     """
     Fit an Ordinary Least Squares model to input Daylio data and return it.
 
     :param csv_in_path: Path to cleaned CSV.
-
-    :return: None.
     """
     df = pd.read_csv(csv_in_path)
 
@@ -84,12 +83,13 @@ def fit(csv_in_path: str):
         ["mood_score"],
         axis=1,
     )
+
     return statsmodels.api.OLS(y, X).fit()
 
 
 def main():
     """
-    Main command-line function.
+    Command-line entry-point.
     """
     csv_in_path = conf.get("data", "cleaned_csv")
     model = fit(csv_in_path)

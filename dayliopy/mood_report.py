@@ -12,9 +12,8 @@ def print_aggregate_stats(df: pd.DataFrame, column_name: str):
     """
     Print aggregate stats for a given DataFrame and column name.
 
-    :param df: pandas.Dataframe instance.
-    :param column_name: str
-        Name of column to use in df. Also used to print a heading.
+    :param df: Data to work on.
+    :param column_name:  Name of column to use in `df`. Also used to print a heading.
 
     :return: None
     """
@@ -30,15 +29,13 @@ def print_aggregate_stats(df: pd.DataFrame, column_name: str):
         print("{k}: {v:3.2f}".format(k=k, v=v))
 
 
-def get_mood_counts(df: pd.DataFrame):
+def get_mood_counts(df: pd.DataFrame) -> pd.DataFrame:
     """
     Combine configured mood score with actual counts and return.
 
-    :param df: pandas.DataFrame instance
-        Data read in from cleaned CSV.
+    :param df: Data that was read in from cleaned CSV.
 
-    :return: pandas.DataFrame instance
-        Dataframe with index as 'mood_label' and columns as
+    :return: Dataframe with index as 'mood_label' and columns as
         ['mood_score', 'count'].
     """
     config_df = pd.DataFrame.from_dict(
@@ -68,7 +65,7 @@ def make_report(csv_in_path: str) -> None:
 
 def main():
     """
-    Main command-line function.
+    Command-line entry-point.
     """
     csv_in_path = conf.get("data", "cleaned_csv")
 

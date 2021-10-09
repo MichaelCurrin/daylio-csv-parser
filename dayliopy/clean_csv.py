@@ -30,11 +30,10 @@ def clean_row(row: dict[str, str], default_activities: list[str]) -> dict[str, s
     """
     Expect a CSV row and default activities and return cleaned row.
 
-    :param row: dict of values as read from source CSV.
-    :param default_activities: list of activities, initialised to default
-        values.
+    :param row: Values as read from source CSV.
+    :param default_activities: Activities, initialized to default values.
 
-    :return: row as a dict of field names and values. Includes fields which
+    :return: Row as field names and values. Includes fields which
         are fixed and also fields which are dynamic, based on activities
         which are used.
     """
@@ -89,7 +88,7 @@ def clean_csv(csv_in: str, csv_out: str):
     no longer needed.
 
     :param csv_in: Path to source CSV file to read in.
-    :param csv_out: Path to cleaned CSV file  write out to.
+    :param csv_out: Path to cleaned CSV file write out to.
 
     :return: None
     """
@@ -146,7 +145,7 @@ def clean_csv(csv_in: str, csv_out: str):
 
 def main():
     """
-    Main command-line function.
+    Command-line entry-point.
     """
     csv_in = conf.get("data", "source_csv")
     csv_out = conf.get("data", "cleaned_csv")
