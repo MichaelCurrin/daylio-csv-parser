@@ -20,8 +20,9 @@ from lib.config import AppConf
 
 conf = AppConf()
 
-DROP_COLUMNS = ("timestamp", "date", "weekday_label", "mood_label", "note")
-OLD_TIME_COLUMNS = ("weekday_num", "month_num", "year")
+# Must be lists and pandas now gives an error on a tuple.
+DROP_COLUMNS = ["timestamp", "date", "weekday_label", "mood_label", "note"]
+OLD_TIME_COLUMNS = ["weekday_num", "month_num", "year"]
 
 
 def prepare_data(df: pd.DataFrame) -> pd.DataFrame:
@@ -42,10 +43,8 @@ def prepare_data(df: pd.DataFrame) -> pd.DataFrame:
 
     :return df: Encoded data.
     """
-    # FIXME: KeyError: "[('timestamp', 'date', 'weekday_label', 'mood_label',
-    # 'note')] not found in axis"
-    # Remove time and text columns that are not needed for training.
-    df.drop(DROP_COLUMNS, axis=1, inplace=True)
+    # Remove columns that are not needed for training.
+    df.drop(DROP_COLUMNS, axis="columns", inplace=True)
 
     df["datetime"] = pd.to_datetime(df.datetime)
 
