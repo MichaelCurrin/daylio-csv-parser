@@ -9,7 +9,9 @@ from .__init__ import APP_DIR
 
 
 class AppConf(ConfigParser):
-    """App configuration object.
+    """
+    App configuration object.
+
     Make app configuration filenames absolute paths and relative to app
     config dir. Then configure the conf object with data.
     The local app conf file is optional and in values in it will overwrite
@@ -17,7 +19,9 @@ class AppConf(ConfigParser):
     """
 
     def __init__(self):
-        """Initialise instance of AppConf class.
+        """
+        Initialise instance of AppConf class.
+
         Read config files in three locations, expecting the first versioned
         file to always be present and the two optional files to either override
         the default values or be ignored silently if they are missing.
@@ -44,8 +48,10 @@ class AppConf(ConfigParser):
         }
 
 
-def test():
-    """Display the values read in across the three conf file locations."""
+def main():
+    """
+    Test to display the values read in across the three conf file locations.
+    """
     conf = AppConf()
 
     for section in conf.sections():
@@ -57,4 +63,4 @@ def test():
 
 
 if __name__ == "__main__":
-    test()
+    main()
