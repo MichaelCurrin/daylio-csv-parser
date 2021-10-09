@@ -104,7 +104,7 @@ def clean_row(
     return {**out_row, **row_activities}
 
 
-def read_csv(csv_in_path: str):
+def read_csv(csv_in_path: str) -> tuple[set[str], list[dict[str, str]]]:
     """
     Read Daylio CSV.
     """
