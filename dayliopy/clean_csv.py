@@ -112,24 +112,25 @@ def read_csv(csv_in_path: str) -> tuple[set[str], list[dict[str, str]]]:
     """
     Read Daylio CSV.
     """
-    available_activities = set()
-    in_data = []
+    available_activities: set[str] = set()
+    in_data: list[dict[str, str]] = []
 
     with codecs.open(csv_in_path, "r", encoding="utf-8-sig") as f_in:
         reader = csv.DictReader(f_in)
 
         for row in reader:
-            activities = row["activities"].split(" | ")
+            activities_str: str = row["activities"]
+            activities_split = activities_str.split(" | ")
 
             # Ignore row of no activities, which will be a single null string
             # after splitting.
-            if len(activities) == 1 and activities[0] == "":
-                activities = []
+            if len(activities_split) == 1 and activities_split[0] == "":
+                activities_list = []
             else:
-                activities = [activity.strip() for activity in activities]
-                available_activities.update(activities)
+                activities_list = [activity.strip() for activity in activities_split]
+                available_activities.update(activities_list)
 
-            row["activities"] = activities
+            row["activities"] = activities_list
             in_data.append(row)
 
     return available_activities, in_data
