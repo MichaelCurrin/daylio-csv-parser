@@ -3,7 +3,7 @@
 Fit Model application file.
 
 1. Read in an already cleaned CSV
-2. Convert it to a Dataframe.
+2. Convert it to a DataFrame.
 3. Apply encoding.
 4. Standardize the data.
 5. Fit an Ordinary Least Squares model.
@@ -24,14 +24,14 @@ DROP_COLUMNS = ("timestamp", "date", "weekday_label", "mood_label", "note")
 OLD_TIME_COLUMNS = ("weekday_num", "month_num", "year")
 
 
-def prepare_data(df: pd.Dataframe) -> pd.Dataframe:
+def prepare_data(df: pd.DataFrame) -> pd.DataFrame:
     """
     Prepare data for model fitting.
 
     Expect cleaned Daylio data as DataFrame, remove unneccessary columns, apply
     one-hot encoding to split certain variables into numeric columns (removing
     the base column of 0 to prevent any collinearity issues), then return as a
-    Dataframe.
+    DataFrame.
 
     Note that year could be kept as a single numeric column, but then it needs
     scaling applied and then reverse scaling to intrept the model stats for

@@ -35,7 +35,7 @@ def get_mood_counts(df: pd.DataFrame) -> pd.DataFrame:
 
     :param df: Data that was read in from cleaned CSV.
 
-    :return: Dataframe with index as 'mood_label' and columns as
+    :return: DataFrame with index as 'mood_label' and columns as
         ['mood_score', 'count'].
     """
     config_df = pd.DataFrame.from_dict(
