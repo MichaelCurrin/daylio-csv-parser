@@ -5,7 +5,7 @@ export PYTHONPATH
 
 default: install install-dev
 
-all: install install-dev fmt-check lint
+all: install install-dev fmt-check lint typecheck
 
 
 h help:
