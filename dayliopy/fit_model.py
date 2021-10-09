@@ -66,7 +66,7 @@ def prepare_data(df: pd.DataFrame) -> pd.DataFrame:
     df[weekday_col_names] = encoded_weekdays
     df[year_col_names] = encoded_years
 
-    df.drop(OLD_TIME_COLUMNS, axis=1, inplace=True)
+    df.drop(OLD_TIME_COLUMNS, axis="columns", inplace=True)
 
     return df
 
