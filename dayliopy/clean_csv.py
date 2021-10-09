@@ -86,8 +86,10 @@ def clean_row(
     :param row: Values as read from source CSV.
     :param default_activities: Activities, initialized to default values.
 
-    :return: Row as field names and values. Includes fields which are fixed and
-        also fields which are dynamic, based on activities which are used.
+    :return combined: Row as field names and values. Includes fields which are
+        fixed and also fields which are dynamic, based on activities which are
+        used. A separate variable had to be used here to avoid getting a type
+        error.
     """
     dt = to_dt(row["full_date"], row["time"])
 
@@ -101,7 +103,9 @@ def clean_row(
 
     out_row = format_row(row, dt, mood, mood_score)
 
-    return {**out_row, **row_activities}
+    combined = {**out_row, **row_activities}
+
+    return combined
 
 
 def read_csv(csv_in_path: str) -> tuple[set[str], list[dict[str, str]]]:
