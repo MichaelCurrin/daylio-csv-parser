@@ -127,6 +127,9 @@ def process_activities(activities_str: str) -> list:
 def read_csv(csv_in_path: str) -> tuple[set[str], list[dict[str, str]]]:
     """
     Read Daylio CSV.
+
+    Ignore types because the row's type if fixed with strings as values and
+    we are adding the activities list to it as a list.
     """
     available_activities: set[str] = set()
     in_data: list[dict[str, str]] = []
@@ -140,7 +143,7 @@ def read_csv(csv_in_path: str) -> tuple[set[str], list[dict[str, str]]]:
 
             available_activities.update(activities_list)
 
-            row["activities_list"] = activities_list
+            row["activities_list"] = activities_list  # type: ignore
             in_data.append(row)
 
     return available_activities, in_data
