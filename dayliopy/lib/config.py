@@ -56,8 +56,9 @@ def main():
 
     for section in conf.sections():
         print(section)
+
         for option, value in conf.items(section):
-            print(" {option:15}: {value}".format(option=option, value=value))
+            print(f" {option:15}: {value}")
 
     print(conf.MOODS)
 
