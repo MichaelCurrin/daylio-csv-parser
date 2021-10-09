@@ -39,6 +39,9 @@ def parse_datetime(dt_str: str) -> datetime.datetime:
 
 
 def parse_mood(mood: str) -> Tuple[str, int]:
+    """
+    Get mood score.
+    """
     # Match the mood label against the configured label and numeric value.
     mood = mood.strip()
 
@@ -57,6 +60,9 @@ def parse_mood(mood: str) -> Tuple[str, int]:
 def format_row(
     row: dict[str, str], datetime_obj, mood: str, mood_score: int
 ) -> dict[str, Union[str, int]]:
+    """
+    Convert Daylio row data for writing to CSV.
+    """
     return {
         "timestamp": datetime_obj.timestamp(),
         "datetime": str(datetime_obj),
@@ -76,9 +82,8 @@ def clean_row(row: dict[str, str], default_activities: list[str]) -> dict[str, s
     :param row: Values as read from source CSV.
     :param default_activities: Activities, initialized to default values.
 
-    :return: Row as field names and values. Includes fields which
-        are fixed and also fields which are dynamic, based on activities
-        which are used.
+    :return: Row as field names and values. Includes fields which are fixed and
+        also fields which are dynamic, based on activities which are used.
     """
     date = row["full_date"]
     time = row["time"]
@@ -99,6 +104,9 @@ def clean_row(row: dict[str, str], default_activities: list[str]) -> dict[str, s
 
 
 def read_csv(csv_in_path: str):
+    """
+    Read Daylio CSV.
+    """
     available_activities = set()
     in_data = []
 
@@ -123,6 +131,9 @@ def read_csv(csv_in_path: str):
 
 
 def prepare_csv(available_activities, in_data):
+    """
+    Convert Daylio CSV file to a more usable CSV report.
+    """
     default_activities = {key: 0 for key in available_activities}
     out_data = [clean_row(row, default_activities.copy()) for row in in_data]
 
@@ -137,13 +148,16 @@ def prepare_csv(available_activities, in_data):
 
 
 def write_csv(csv_out_path, out_data, out_fields):
+    """
+    Write rows to a CSV.
+    """
     with open(csv_out_path, "w") as f_out:
         writer = csv.DictWriter(f_out, fieldnames=out_fields)
         writer.writeheader()
         writer.writerows(out_data)
 
 
-def clean_csv(csv_in: str, csv_out: str) -> None:
+def process(csv_in: str, csv_out: str) -> None:
     """
     Read, clean and write data.
 
@@ -161,7 +175,6 @@ def clean_csv(csv_in: str, csv_out: str) -> None:
     :param csv_out: Path to cleaned CSV file write out to.
     """
     print(f"Reading CSV: {csv_in}")
-
     available_activities, in_data = read_csv(csv_in)
 
     print("Replacing the activities column with multiple activity columns")
@@ -178,7 +191,7 @@ def main():
     csv_in = conf.get("data", "source_csv")
     csv_out = conf.get("data", "cleaned_csv")
 
-    clean_csv(csv_in, csv_out)
+    process(csv_in, csv_out)
 
 
 if __name__ == "__main__":
