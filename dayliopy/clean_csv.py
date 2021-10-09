@@ -61,7 +61,7 @@ def get_score(mood: str) -> int:
     return mood_score
 
 
-def format_row(row: dict[str, str], datetime_obj, mood: str, mood_score: int):
+def format_row(row: dict[str, str], datetime_obj, mood: str, mood_score: int) -> dict:
     """
     Convert Daylio row data for writing to CSV.
     """
