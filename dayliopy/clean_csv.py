@@ -42,7 +42,7 @@ def parse_datetime(date: str, time: str) -> datetime.datetime:
     return datetime.datetime.strptime(dt_str, dt_format)
 
 
-def get_score(mood: str) -> Tuple[str, int]:
+def get_score(mood: str) -> int:
     """
     Get mood score.
     """
