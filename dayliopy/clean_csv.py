@@ -4,13 +4,14 @@ Clean CSV application file.
 
 Read in input CSV, clean it and write out to a new CSV.
 """
+import codecs
 import csv
 import datetime
-import codecs
 
 from lib.config import AppConf
 
 conf = AppConf()
+
 
 def parse_datetime(datetime_str: str) -> datetime.datetime:
     """
@@ -23,9 +24,10 @@ def parse_datetime(datetime_str: str) -> datetime.datetime:
     # Detect if time is 24H or 12H time.
     if datetime_str.endswith("am") or datetime_str.endswith("pm"):
         datetime_format = r"%Y-%m-%d %I:%M %p"
-    else: 
+    else:
         datetime_format = r"%Y-%m-%d %H:%M"
     return datetime.datetime.strptime(datetime_str, datetime_format)
+
 
 def clean_row(row, default_activities):
     """
@@ -99,7 +101,7 @@ def clean_csv(csv_in, csv_out):
 
     print("Reading CSV: {}".format(csv_in))
 
-    with codecs.open(csv_in, "r", encoding='utf-8-sig') as f_in:
+    with codecs.open(csv_in, "r", encoding="utf-8-sig") as f_in:
         reader = csv.DictReader(f_in)
 
         for row in reader:
