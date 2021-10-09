@@ -77,7 +77,9 @@ def format_row(row: dict[str, str], datetime_obj, mood: str, mood_score: int):
     }
 
 
-def clean_row(row: dict[str, str], default_activities: list[str]) -> dict[str, str]:
+def clean_row(
+    row: dict[str, str], default_activities: dict[str, str]
+) -> dict[str, str]:
     """
     Expect a CSV row and default activities and return cleaned row.
 
