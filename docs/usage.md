@@ -83,7 +83,7 @@ The [fit_model.py](/dayiopy/fit_model.py) script performs the following steps:
 1. Fit Ordinary Least Squares model using the data.
 1. Print model stats, to better under factors influencing mood.
 
-```bash
+```sh
 $ make fit
 ```
 
