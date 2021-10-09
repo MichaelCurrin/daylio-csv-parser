@@ -7,6 +7,7 @@ Read in input CSV, clean it and write out to a new CSV.
 import codecs
 import csv
 import datetime
+from typing import Tuple, Union
 
 from lib.config import AppConf
 
@@ -26,6 +27,37 @@ def parse_datetime(dt_str: str) -> datetime.datetime:
     return datetime.datetime.strptime(dt_str, dt_format)
 
 
+def parse_mood(mood: str) -> Tuple[str, int]:
+    # Match the mood label against the configured label and numeric value.
+    mood = mood.strip()
+
+    try:
+        mood_score = conf.MOODS[mood]
+    except KeyError as e:
+        raise type(e)(
+            f"Each mood label in your CSV must be added to a conf file so that"
+            f" it can be assigned a numeric value. Not found:"
+            f" {mood}. Configured moods: {conf.MOODS}"
+        )
+
+    return mood, mood_score
+
+
+def format_row(
+    row: dict[str, str], datetime_obj, mood: str, mood_score: int
+) -> dict[str, Union[str, int]]:
+    return {
+        "timestamp": datetime_obj.timestamp(),
+        "datetime": str(datetime_obj),
+        "date": str(datetime_obj.date()),
+        "weekday_label": row["weekday"],
+        "weekday_num": datetime_obj.weekday(),
+        "mood_label": mood,
+        "mood_score": mood_score,
+        "note": row["note"],
+    }
+
+
 def clean_row(row: dict[str, str], default_activities: list[str]) -> dict[str, str]:
     """
     Expect a CSV row and default activities and return cleaned row.
@@ -43,32 +75,14 @@ def clean_row(row: dict[str, str], default_activities: list[str]) -> dict[str, s
 
     datetime_obj = parse_datetime(datetime_str)
 
-    # Match the mood label against the configured label and numeric value.
-    mood = row["mood"].strip()
-
-    try:
-        mood_score = conf.MOODS[mood]
-    except KeyError as e:
-        raise type(e)(
-            f"Each mood label in your CS must be added to a conf file so that"
-            f" it can be assigned a numeric value. Not found:"
-            f" {mood}. Configured moods: {conf.MOODS}"
-        )
+    mood, mood_score = parse_mood(row["mood"])
 
     row_activities = default_activities.copy()
+
     for activity in row["activities"]:
         row_activities[activity] = 1
 
-    out_row = {
-        "timestamp": datetime_obj.timestamp(),
-        "datetime": str(datetime_obj),
-        "date": str(datetime_obj.date()),
-        "weekday_label": row["weekday"],
-        "weekday_num": datetime_obj.weekday(),
-        "mood_label": mood,
-        "mood_score": mood_score,
-        "note": row["note"],
-    }
+    out_row = format_row(row, datetime_obj, mood, mood_score)
 
     return {**out_row, **row_activities}
 
