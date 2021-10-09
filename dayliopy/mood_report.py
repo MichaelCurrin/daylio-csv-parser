@@ -3,19 +3,20 @@
 Mood report application file.
 """
 import pandas as pd
-from lib.config import AppConf
+
+from .lib.config import AppConf
+
 
 conf = AppConf()
 
 
-def print_aggregate_stats(df: pd.DataFrame, column_name: str):
+def print_aggregate_stats(df: pd.DataFrame, column_name: str) -> None:
     """
     Print aggregate stats for a given DataFrame and column name.
 
     :param df: Data to work on.
-    :param column_name:  Name of column to use in `df`. Also used to print a heading.
-
-    :return: None
+    :param column_name: Name of column to use in `df`. Also used to print a
+    heading.
     """
     print(column_name)
 

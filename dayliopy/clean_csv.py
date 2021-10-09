@@ -7,27 +7,44 @@ Read in input CSV, clean it and write out to a new CSV.
 import codecs
 import csv
 import datetime
-from typing import Tuple, Union
 
-from lib.config import AppConf
+from .lib.config import AppConf
+
 
 conf = AppConf()
 
 DT_12H = r"%Y-%m-%d %I:%M %p"
 DT_24H = r"%Y-%m-%d %H:%M"
 
+CSV_OUT_FIELDS = [
+    "timestamp",
+    "datetime",
+    "date",
+    "weekday_label",
+    "weekday_num",
+    "mood_label",
+    "mood_score",
+    "note",
+]
 
-def parse_datetime(dt_str: str) -> datetime.datetime:
+
+def to_dt(date: str, time: str) -> datetime.datetime:
     """
-    :param datetime_str: Date and time in one of two possible formats.
+    :param date: Date in format like '2021-09-28'.
+    :param time: Time in format like '10:00 pm' or '22:00'.
     """
-    is_12h = dt_str.endswith("am") or dt_str.endswith("pm")
+    dt_str = f"{date} {time}"
+
+    is_12h = time.endswith("am") or time.endswith("pm")
     dt_format = DT_12H if is_12h else DT_24H
 
     return datetime.datetime.strptime(dt_str, dt_format)
 
 
-def parse_mood(mood: str) -> Tuple[str, int]:
+def get_score(mood: str) -> int:
+    """
+    Get mood score.
+    """
     # Match the mood label against the configured label and numeric value.
     mood = mood.strip()
 
@@ -40,12 +57,13 @@ def parse_mood(mood: str) -> Tuple[str, int]:
             f" {mood}. Configured moods: {conf.MOODS}"
         )
 
-    return mood, mood_score
+    return mood_score
 
 
-def format_row(
-    row: dict[str, str], datetime_obj, mood: str, mood_score: int
-) -> dict[str, Union[str, int]]:
+def format_row(row: dict[str, str], datetime_obj, mood: str, mood_score: int) -> dict:
+    """
+    Convert Daylio row data for writing to CSV.
+    """
     return {
         "timestamp": datetime_obj.timestamp(),
         "datetime": str(datetime_obj),
@@ -58,36 +76,106 @@ def format_row(
     }
 
 
-def clean_row(row: dict[str, str], default_activities: list[str]) -> dict[str, str]:
+def clean_row(
+    row: dict[str, str], default_activities: dict[str, int]
+) -> dict[str, str]:
     """
     Expect a CSV row and default activities and return cleaned row.
 
     :param row: Values as read from source CSV.
     :param default_activities: Activities, initialized to default values.
 
-    :return: Row as field names and values. Includes fields which
-        are fixed and also fields which are dynamic, based on activities
-        which are used.
+    :return combined: Row as field names and values. Includes fields which are
+        fixed and also fields which are dynamic, based on activities which are
+        used. A separate variable had to be used here to avoid getting a type
+        error.
     """
-    date = row["full_date"]
-    time = row["time"]
-    datetime_str = f"{date} {time}"
+    dt = to_dt(row["full_date"], row["time"])
 
-    datetime_obj = parse_datetime(datetime_str)
-
-    mood, mood_score = parse_mood(row["mood"])
+    mood = row["mood"]
+    mood_score = get_score(mood)
 
     row_activities = default_activities.copy()
 
-    for activity in row["activities"]:
+    for activity in row["activities_list"]:
         row_activities[activity] = 1
 
-    out_row = format_row(row, datetime_obj, mood, mood_score)
+    out_row = format_row(row, dt, mood, mood_score)
 
-    return {**out_row, **row_activities}
+    combined = {**out_row, **row_activities}
+
+    return combined
 
 
-def clean_csv(csv_in: str, csv_out: str) -> None:
+def process_activities(activities_str: str) -> list:
+    """
+    Split activities as a pipe-separated string into a list of activities.
+    """
+    activities_split = activities_str.split(" | ")
+
+    # Ignore row of no activities, which will be a single null string
+    # after splitting.
+    if len(activities_split) == 1 and activities_split[0] == "":
+        activities_list = []
+    else:
+        activities_list = [activity.strip() for activity in activities_split]
+
+    return activities_list
+
+
+def read_csv(csv_in_path: str) -> tuple[set[str], list[dict[str, str]]]:
+    """
+    Read Daylio CSV.
+
+    Ignore types because the row's type if fixed with strings as values and
+    we are adding the activities list to it as a list.
+    """
+    available_activities: set[str] = set()
+    in_data: list[dict[str, str]] = []
+
+    with codecs.open(csv_in_path, "r", encoding="utf-8-sig") as f_in:
+        reader = csv.DictReader(f_in)
+
+        for row in reader:
+            original_activities_str = row["activities"]
+            activities_list = process_activities(original_activities_str)
+
+            available_activities.update(activities_list)
+
+            row["activities_list"] = activities_list  # type: ignore
+            in_data.append(row)
+
+    return available_activities, in_data
+
+
+def clean_daylio_data(available_activities: set, in_data: list[dict[str, str]]):
+    """
+    Convert Daylio CSV file to a more usable CSV report.
+    """
+    default_activities = {key: 0 for key in available_activities}
+    out_data = [clean_row(row, default_activities.copy()) for row in in_data]
+
+    out_fields = CSV_OUT_FIELDS.copy()
+    activity_columns = sorted(list(available_activities))
+
+    # For readability of the CSV, insert the dynamic activity values before
+    # the text note at the end.
+    out_fields[-1:-1] = activity_columns
+
+    return out_data, out_fields
+
+
+def write_csv(csv_out_path, out_data, out_fields):
+    """
+    Write rows to a CSV.
+    """
+    with open(csv_out_path, "w") as f_out:
+        writer = csv.DictWriter(f_out, fieldnames=out_fields)
+        writer.writeheader()
+        writer.writerows(out_data)
+
+
+def process(csv_in: str, csv_out: str) -> None:
     """
     Read, clean and write data.
 
@@ -104,55 +192,14 @@ def clean_csv(csv_in: str, csv_out: str) -> None:
     :param csv_in: Path to source CSV file to read in.
     :param csv_out: Path to cleaned CSV file write out to.
     """
-    available_activities = set()
-    in_data = []
+    print(f"Reading CSV: {csv_in}")
+    available_activities, in_data = read_csv(csv_in)
 
-    print("Reading CSV: {}".format(csv_in))
+    print("Replacing the activities column with multiple activity columns")
+    out_data, out_fields = clean_daylio_data(available_activities, in_data)
 
-    with codecs.open(csv_in, "r", encoding="utf-8-sig") as f_in:
-        reader = csv.DictReader(f_in)
-
-        for row in reader:
-            activities = row["activities"].split(" | ")
-
-            # Ignore row of no activities, which will be a single null string
-            # after splitting.
-            if len(activities) == 1 and activities[0] == "":
-                activities = []
-            else:
-                activities = [activity.strip() for activity in activities]
-                available_activities.update(activities)
-
-            row["activities"] = activities
-            in_data.append(row)
-
-    print("Replacing activities column with multiple activity columns")
-
-    default_activities = {key: 0 for key in available_activities}
-    out_data = [clean_row(row, default_activities.copy()) for row in in_data]
-
-    out_fields = [
-        "timestamp",
-        "datetime",
-        "date",
-        "weekday_label",
-        "weekday_num",
-        "mood_label",
-        "mood_score",
-        "note",
-    ]
-
-    activity_columns = sorted(list(available_activities))
-    # For readability of the CSV, insert the dynamic activity values before
-    # the text note.
-    out_fields[-1:-1] = activity_columns
-
-    print(f"Writing cleaned CV to: {csv_out}")
-
-    with open(csv_out, "w") as f_out:
-        writer = csv.DictWriter(f_out, fieldnames=out_fields)
-        writer.writeheader()
-        writer.writerows(out_data)
+    print(f"Writing cleaned CSV to: {csv_out}")
+    write_csv(csv_out, out_data, out_fields)
 
 
 def main():
@@ -162,7 +209,7 @@ def main():
     csv_in = conf.get("data", "source_csv")
     csv_out = conf.get("data", "cleaned_csv")
 
-    clean_csv(csv_in, csv_out)
+    process(csv_in, csv_out)
 
 
 if __name__ == "__main__":
