@@ -3,7 +3,7 @@
 Fit Model application file.
 
 1. Read in an already cleaned CSV
-2. Convert it to a Dataframe.
+2. Convert it to a DataFrame.
 3. Apply encoding.
 4. Standardize the data.
 5. Fit an Ordinary Least Squares model.
@@ -20,31 +20,31 @@ from lib.config import AppConf
 
 conf = AppConf()
 
-DROP_COLUMNS = ("timestamp", "date", "weekday_label", "mood_label", "note")
-OLD_TIME_COLUMNS = ("weekday_num", "month_num", "year")
+# Must be lists and pandas now gives an error on a tuple.
+DROP_COLUMNS = ["timestamp", "date", "weekday_label", "mood_label", "note"]
+OLD_TIME_COLUMNS = ["weekday_num", "month_num", "year"]
 
 
-def prepare_data(df):
+def prepare_data(df: pd.DataFrame) -> pd.DataFrame:
     """
     Prepare data for model fitting.
 
     Expect cleaned Daylio data as DataFrame, remove unneccessary columns, apply
     one-hot encoding to split certain variables into numeric columns (removing
     the base column of 0 to prevent any collinearity issues), then return as a
-    Dataframe.
+    DataFrame.
 
     Note that year could be kept as a single numeric column, but then it needs
     scaling applied and then reverse scaling to intrept the model stats for
     year. Therefore for simplicity, unique year values are split into one-hot
     encoded columns, as with week and month.
 
-    @param df: Dataframe of cleaned input data.
+    :param df: Cleaned input data.
 
-    @return df: Dataframe of encoded data.
+    :return df: Encoded data.
     """
-    # FIXME: KeyError: "[('timestamp', 'date', 'weekday_label', 'mood_label', 'note')] not found in axis"
-    # Remove time and text columns not needed for training.
-    df.drop(DROP_COLUMNS, axis=1, inplace=True)
+    # Remove columns that are not needed for training.
+    df.drop(DROP_COLUMNS, axis="columns", inplace=True)
 
     df["datetime"] = pd.to_datetime(df.datetime)
 
@@ -58,22 +58,24 @@ def prepare_data(df):
     encoded_months = pd.get_dummies(df["month_num"], prefix="month", drop_first=True)
     encoded_years = pd.get_dummies(df["year"], prefix="year", drop_first=True)
 
-    df[list(encoded_weekdays.columns)] = encoded_weekdays
-    df[list(encoded_months.columns)] = encoded_months
-    df[list(encoded_years.columns)] = encoded_years
+    weekday_col_names = list(encoded_weekdays.columns)
+    month_col_names = list(encoded_months.columns)
+    year_col_names = list(encoded_years.columns)
 
-    df.drop(OLD_TIME_COLUMNS, axis=1, inplace=True)
+    df[month_col_names] = encoded_months
+    df[weekday_col_names] = encoded_weekdays
+    df[year_col_names] = encoded_years
+
+    df.drop(OLD_TIME_COLUMNS, axis="columns", inplace=True)
 
     return df
 
 
-def fit(csv_in_path):
+def fit(csv_in_path: str) -> statsmodels.api.OLS:
     """
     Fit an Ordinary Least Squares model to input Daylio data and return it.
 
-    @param csv_in_path: Path to cleaned CSV.
-
-    @return: None.
+    :param csv_in_path: Path to cleaned CSV.
     """
     df = pd.read_csv(csv_in_path)
 
@@ -84,12 +86,13 @@ def fit(csv_in_path):
         ["mood_score"],
         axis=1,
     )
+
     return statsmodels.api.OLS(y, X).fit()
 
 
 def main():
     """
-    Main command-line function.
+    Command-line entry-point.
     """
     csv_in_path = conf.get("data", "cleaned_csv")
     model = fit(csv_in_path)
