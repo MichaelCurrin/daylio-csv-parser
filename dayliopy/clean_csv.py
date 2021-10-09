@@ -12,6 +12,20 @@ from lib.config import AppConf
 
 conf = AppConf()
 
+def parse_datetime(datetime_str: str) -> datetime.datetime:
+    """
+    Parses a "date time" string into a Datetime object
+
+    @param datetime_str: "date time" string
+
+    @return: Datetime Object
+    """
+    # Detect if time is 24H or 12H time.
+    if datetime_str.endswith("am") or datetime_str.endswith("pm"):
+        datetime_format = r"%Y-%m-%d %I:%M %p"
+    else: 
+        datetime_format = r"%Y-%m-%d %H:%M"
+    return datetime.datetime.strptime(datetime_str, datetime_format)
 
 def clean_row(row, default_activities):
     """
@@ -28,7 +42,8 @@ def clean_row(row, default_activities):
     date = row["full_date"]
     time = row["time"]
     datetime_str = f"{date} {time}"
-    datetime_obj = datetime.datetime.strptime(datetime_str, r"%Y-%m-%d %I:%M %p")
+
+    datetime_obj = parse_datetime(datetime_str)
 
     # Match the mood label against the configured label and numeric value.
     mood = row["mood"].strip()
@@ -114,7 +129,7 @@ def clean_csv(csv_in, csv_out):
     ]
 
     activity_columns = sorted(list(available_activities))
-    # For readability of the CSV, insert the dynamic acitvity values before
+    # For readability of the CSV, insert the dynamic activity values before
     # the text note.
     out_fields[-1:-1] = activity_columns
 
