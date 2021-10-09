@@ -78,7 +78,7 @@ def format_row(row: dict[str, str], datetime_obj, mood: str, mood_score: int):
 
 
 def clean_row(
-    row: dict[str, str], default_activities: dict[str, str]
+    row: dict[str, str], default_activities: dict[str, int]
 ) -> dict[str, str]:
     """
     Expect a CSV row and default activities and return cleaned row.
@@ -131,7 +131,7 @@ def read_csv(csv_in_path: str):
     return available_activities, in_data
 
 
-def clean_daylio_data(available_activities, in_data):
+def clean_daylio_data(available_activities: set, in_data: list[dict[str, str]]):
     """
     Convert Daylio CSV file to a more usable CSV report.
     """
