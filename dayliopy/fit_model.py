@@ -24,7 +24,7 @@ DROP_COLUMNS = ("timestamp", "date", "weekday_label", "mood_label", "note")
 OLD_TIME_COLUMNS = ("weekday_num", "month_num", "year")
 
 
-def prepare_data(df):
+def prepare_data(df: pd.Dataframe) -> pd.Dataframe:
     """
     Prepare data for model fitting.
 
@@ -67,7 +67,7 @@ def prepare_data(df):
     return df
 
 
-def fit(csv_in_path):
+def fit(csv_in_path: str):
     """
     Fit an Ordinary Least Squares model to input Daylio data and return it.
 

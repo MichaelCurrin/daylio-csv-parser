@@ -8,7 +8,7 @@ from lib.config import AppConf
 conf = AppConf()
 
 
-def print_aggregate_stats(df, column_name):
+def print_aggregate_stats(df: pd.DataFrame, column_name: str):
     """
     Print aggregate stats for a given DataFrame and column name.
 
@@ -30,7 +30,7 @@ def print_aggregate_stats(df, column_name):
         print("{k}: {v:3.2f}".format(k=k, v=v))
 
 
-def get_mood_counts(df):
+def get_mood_counts(df: pd.DataFrame):
     """
     Combine configured mood score with actual counts and return.
 
@@ -52,7 +52,7 @@ def get_mood_counts(df):
     return pd.merge(config_df, value_counts, left_index=True, right_index=True)
 
 
-def make_report(csv_in_path):
+def make_report(csv_in_path: str) -> None:
     """
     Make report from input CSV and show.
 

@@ -26,7 +26,7 @@ def parse_datetime(dt_str: str) -> datetime.datetime:
     return datetime.datetime.strptime(dt_str, dt_format)
 
 
-def clean_row(row, default_activities):
+def clean_row(row: dict[str, str], default_activities: list[str]) -> dict[str, str]:
     """
     Expect a CSV row and default activities and return cleaned row.
 
@@ -74,7 +74,7 @@ def clean_row(row, default_activities):
     return {**out_row, **row_activities}
 
 
-def clean_csv(csv_in, csv_out):
+def clean_csv(csv_in: str, csv_out: str):
     """
     Read, clean and write data.
 
