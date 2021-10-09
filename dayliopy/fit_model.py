@@ -16,7 +16,8 @@ direction of the factor's influence on the mood score.
 """
 import pandas as pd
 import statsmodels.api
-from lib.config import AppConf
+
+from .lib.config import AppConf
 
 
 conf = AppConf()

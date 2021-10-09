@@ -49,16 +49,13 @@ t typecheck:
 
 
 csv:
-	cd $(APP_DIR) \
-		&& ./clean_csv.py
+	python -m $(APP_DIR).clean_csv
 
 mood:
-	cd $(APP_DIR) \
-		&& ./mood_report.py
+	python -m $(APP_DIR).mood_report
 
 fit:
-	cd $(APP_DIR) \
-		&& ./fit_model.py
+	python -m $(APP_DIR).fit_model
 
 process: csv mood fit
 

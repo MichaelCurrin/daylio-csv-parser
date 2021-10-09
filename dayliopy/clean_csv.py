@@ -9,7 +9,7 @@ import csv
 import datetime
 from typing import Tuple, Union
 
-from lib.config import AppConf
+from .lib.config import AppConf
 
 
 conf = AppConf()
