@@ -122,6 +122,13 @@ def read_csv(csv_in_path: str):
     return available_activities, in_data
 
 
+def write_csv(csv_out_path, out_data, out_fields):
+    with open(csv_out_path, "w") as f_out:
+        writer = csv.DictWriter(f_out, fieldnames=out_fields)
+        writer.writeheader()
+        writer.writerows(out_data)
+
+
 def clean_csv(csv_in: str, csv_out: str) -> None:
     """
     Read, clean and write data.
@@ -155,12 +162,8 @@ def clean_csv(csv_in: str, csv_out: str) -> None:
     # the text note at the end.
     out_fields[-1:-1] = activity_columns
 
-    print(f"Writing cleaned CV to: {csv_out}")
-
-    with open(csv_out, "w") as f_out:
-        writer = csv.DictWriter(f_out, fieldnames=out_fields)
-        writer.writeheader()
-        writer.writerows(out_data)
+    print(f"Writing cleaned CSV to: {csv_out}")
+    write_csv(csv_out, out_data, out_fields)
 
 
 def main():
