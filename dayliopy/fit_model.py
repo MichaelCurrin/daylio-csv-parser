@@ -86,7 +86,7 @@ def fit(csv_in_path: str) -> statsmodels.api.OLS:
     y = encoded_df["mood_score"]
     X = encoded_df.drop(
         ["mood_score"],
-        axis=1,
+        axis="columns",
     )
 
     return statsmodels.api.OLS(y, X).fit()
