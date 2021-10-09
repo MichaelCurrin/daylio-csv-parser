@@ -58,9 +58,13 @@ def prepare_data(df: pd.DataFrame) -> pd.DataFrame:
     encoded_months = pd.get_dummies(df["month_num"], prefix="month", drop_first=True)
     encoded_years = pd.get_dummies(df["year"], prefix="year", drop_first=True)
 
-    df[list(encoded_weekdays.columns)] = encoded_weekdays
-    df[list(encoded_months.columns)] = encoded_months
-    df[list(encoded_years.columns)] = encoded_years
+    weekday_col_names = list(encoded_weekdays.columns)
+    month_col_names = list(encoded_months.columns)
+    year_col_names = list(encoded_years.columns)
+
+    df[month_col_names] = encoded_months
+    df[weekday_col_names] = encoded_weekdays
+    df[year_col_names] = encoded_years
 
     df.drop(OLD_TIME_COLUMNS, axis=1, inplace=True)
 
