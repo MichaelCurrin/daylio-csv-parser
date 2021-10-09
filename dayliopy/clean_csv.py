@@ -12,21 +12,18 @@ from lib.config import AppConf
 
 conf = AppConf()
 
+DT_12H = r"%Y-%m-%d %I:%M %p"
+DT_24H = r"%Y-%m-%d %H:%M"
 
-def parse_datetime(datetime_str: str) -> datetime.datetime:
+
+def parse_datetime(dt_str: str) -> datetime.datetime:
     """
-    Parses a "date time" string into a Datetime object
-
-    @param datetime_str: "date time" string
-
-    @return: Datetime Object
+    @param datetime_str: Date and time in one of two possible formats.
     """
-    # Detect if time is 24H or 12H time.
-    if datetime_str.endswith("am") or datetime_str.endswith("pm"):
-        datetime_format = r"%Y-%m-%d %I:%M %p"
-    else:
-        datetime_format = r"%Y-%m-%d %H:%M"
-    return datetime.datetime.strptime(datetime_str, datetime_format)
+    is_12h = dt_str.endswith("am") or dt_str.endswith("pm")
+    dt_format = DT_12H if is_12h else DT_24H
+
+    return datetime.datetime.strptime(dt_str, dt_format)
 
 
 def clean_row(row, default_activities):
