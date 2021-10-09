@@ -98,6 +98,30 @@ def clean_row(row: dict[str, str], default_activities: list[str]) -> dict[str, s
     return {**out_row, **row_activities}
 
 
+def read_csv(csv_in_path: str):
+    available_activities = set()
+    in_data = []
+
+    with codecs.open(csv_in_path, "r", encoding="utf-8-sig") as f_in:
+        reader = csv.DictReader(f_in)
+
+        for row in reader:
+            activities = row["activities"].split(" | ")
+
+            # Ignore row of no activities, which will be a single null string
+            # after splitting.
+            if len(activities) == 1 and activities[0] == "":
+                activities = []
+            else:
+                activities = [activity.strip() for activity in activities]
+                available_activities.update(activities)
+
+            row["activities"] = activities
+            in_data.append(row)
+
+    return available_activities, in_data
+
+
 def clean_csv(csv_in: str, csv_out: str) -> None:
     """
     Read, clean and write data.
@@ -115,27 +139,9 @@ def clean_csv(csv_in: str, csv_out: str) -> None:
     :param csv_in: Path to source CSV file to read in.
     :param csv_out: Path to cleaned CSV file write out to.
     """
-    available_activities = set()
-    in_data = []
+    print(f"Reading CSV: {csv_in}")
 
-    print("Reading CSV: {}".format(csv_in))
-
-    with codecs.open(csv_in, "r", encoding="utf-8-sig") as f_in:
-        reader = csv.DictReader(f_in)
-
-        for row in reader:
-            activities = row["activities"].split(" | ")
-
-            # Ignore row of no activities, which will be a single null string
-            # after splitting.
-            if len(activities) == 1 and activities[0] == "":
-                activities = []
-            else:
-                activities = [activity.strip() for activity in activities]
-                available_activities.update(activities)
-
-            row["activities"] = activities
-            in_data.append(row)
+    available_activities, in_data = read_csv(csv_in)
 
     print("Replacing activities column with multiple activity columns")
 
