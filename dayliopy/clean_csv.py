@@ -29,7 +29,7 @@ CSV_OUT_FIELDS = [
 ]
 
 
-def parse_datetime(date: str, time: str) -> datetime.datetime:
+def to_dt(date: str, time: str) -> datetime.datetime:
     """
     :param date: Date in format like '2021-09-28'.
     :param time: Time in format like '10:00 pm' or '22:00'.
@@ -89,7 +89,7 @@ def clean_row(
     :return: Row as field names and values. Includes fields which are fixed and
         also fields which are dynamic, based on activities which are used.
     """
-    datetime_obj = parse_datetime(row["full_date"], row["time"])
+    dt = to_dt(row["full_date"], row["time"])
 
     mood = row["mood"]
     mood_score = get_score(mood)
@@ -99,7 +99,7 @@ def clean_row(
     for activity in row["activities"]:
         row_activities[activity] = 1
 
-    out_row = format_row(row, datetime_obj, mood, mood_score)
+    out_row = format_row(row, dt, mood, mood_score)
 
     return {**out_row, **row_activities}
 
