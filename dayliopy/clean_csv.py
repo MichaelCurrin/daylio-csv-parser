@@ -87,24 +87,22 @@ def clean_row(row: dict[str, str], default_activities: list[str]) -> dict[str, s
     return {**out_row, **row_activities}
 
 
-def clean_csv(csv_in: str, csv_out: str):
+def clean_csv(csv_in: str, csv_out: str) -> None:
     """
     Read, clean and write data.
 
-    The available activities set must be populated on the first pass through
-    the input data, where an activity enters a set the first time is
-    used. Once the names and number of columns are known, a default row
-    of 0 (false) for each activity is set. Then a second pass of the data
-    is done to set the 1 (true) values for relevant activities of a record.
+    The available activities set must be populated on the first pass through the
+    input data, where an activity enters a set the first time is used. Once the
+    names and number of columns are known, a default row of 0 (false) for each
+    activity is set. Then a second pass of the data is done to set the 1 (true)
+    values for relevant activities of a record.
 
-    Note use of codecs with encoding for Windows support. This also means
-    the hack on Unix to ignore the first byte of unwanted invisible character is
-    no longer needed.
+    Note use of codecs with encoding for Windows support. This also means the
+    hack on Unix to ignore the first byte of unwanted invisible character is no
+    longer needed.
 
     :param csv_in: Path to source CSV file to read in.
     :param csv_out: Path to cleaned CSV file write out to.
-
-    :return: None
     """
     available_activities = set()
     in_data = []
