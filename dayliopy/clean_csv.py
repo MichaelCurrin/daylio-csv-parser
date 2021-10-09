@@ -7,7 +7,6 @@ Read in input CSV, clean it and write out to a new CSV.
 import codecs
 import csv
 import datetime
-from typing import Tuple, Union
 
 from .lib.config import AppConf
 
