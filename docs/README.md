@@ -1,3 +1,7 @@
+---
+permalink: /
+---
+
 # Daylio CSV Parser docs ☺️ 📆 🐍
 > Improve the usability of the Daylio CSV export and explore reports around your data
 
