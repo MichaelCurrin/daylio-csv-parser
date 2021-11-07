@@ -69,7 +69,7 @@ $ ./fit_model.py
 
 <div align="center">
 
-[![view - Documentation](https://img.shields.io/badge/view-Documentation-blue?style=for-the-badge)](/docs/ "Go to docs")
+[![view - Online docs](https://img.shields.io/badge/view-Online_docs-blue?style=for-the-badge)](https://michaelcurrin.github.io/daylio-csv-parser/ "Go to docs site")
 
 </div>
 
