@@ -10,7 +10,10 @@
 [![dependency - pandas](https://img.shields.io/badge/dependency-pandas-blue)](https://pypi.org/project/pandas)
 
 
-## About
+This Python 3 CLI took will convert a Daylio CSV export into a more usable CSV and a SQLite database.
+
+
+## About Daylio CSV
 
 What is Daylio? Read in this [doc](/docs/what-is-daylio.md).
 
