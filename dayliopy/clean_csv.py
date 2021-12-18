@@ -8,7 +8,7 @@ import codecs
 import csv
 import datetime
 
-from .lib.config import AppConf
+from lib.config import AppConf
 
 
 conf = AppConf()
@@ -40,8 +40,14 @@ def to_dt(date: str, time: str) -> datetime.datetime:
 
     return datetime.datetime.strptime(dt_str, dt_format)
 
+def interpret_moods() -> dict[str, int]:
+    result: dict[str, int] = {}
+    for key in conf.MOODS.keys():
+        for mood in key.split(','):
+            result[mood.strip()] = conf.MOODS[key]
+    return result
 
-def get_score(mood: str) -> int:
+def get_score(mood: str, interpreted_moods: dict[str, int]) -> int:
     """
     Get mood score.
     """
@@ -49,7 +55,7 @@ def get_score(mood: str) -> int:
     mood = mood.strip()
 
     try:
-        mood_score = conf.MOODS[mood]
+        mood_score = interpreted_moods[mood]
     except KeyError as e:
         raise type(e)(
             f"Each mood label in your CSV must be added to a conf file so that"
@@ -77,7 +83,7 @@ def format_row(row: dict[str, str], datetime_obj, mood: str, mood_score: int) ->
 
 
 def clean_row(
-    row: dict[str, str], default_activities: dict[str, int]
+    row: dict[str, str], default_activities: dict[str, int], interpreted_moods: dict[str, int]
 ) -> dict[str, str]:
     """
     Expect a CSV row and default activities and return cleaned row.
@@ -93,7 +99,7 @@ def clean_row(
     dt = to_dt(row["full_date"], row["time"])
 
     mood = row["mood"]
-    mood_score = get_score(mood)
+    mood_score = get_score(mood, interpreted_moods)
 
     row_activities = default_activities.copy()
 
@@ -153,7 +159,8 @@ def clean_daylio_data(available_activities: set, in_data: list[dict[str, str]]):
     Convert Daylio CSV file to a more usable CSV report.
     """
     default_activities = {key: 0 for key in available_activities}
-    out_data = [clean_row(row, default_activities.copy()) for row in in_data]
+    moods: dict[str: int] = interpret_moods()
+    out_data = [clean_row(row, default_activities.copy(), moods) for row in in_data]
 
     out_fields = CSV_OUT_FIELDS.copy()
     activity_columns = sorted(list(available_activities))
