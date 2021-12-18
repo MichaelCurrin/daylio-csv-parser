@@ -8,7 +8,7 @@ import codecs
 import csv
 import datetime
 
-from lib.config import AppConf
+from .lib.config import AppConf
 
 
 conf = AppConf()
@@ -41,8 +41,9 @@ def to_dt(date: str, time: str) -> datetime.datetime:
     return datetime.datetime.strptime(dt_str, dt_format)
 
 
+
 def interpret_moods() -> dict[str, int]:
-    result: dict[str, int] = {}
+    result = {}
     for key in conf.MOODS.keys():
         for mood in key.split(","):
             result[mood.strip()] = conf.MOODS[key]
