@@ -40,12 +40,14 @@ def to_dt(date: str, time: str) -> datetime.datetime:
 
     return datetime.datetime.strptime(dt_str, dt_format)
 
+
 def interpret_moods() -> dict[str, int]:
     result: dict[str, int] = {}
     for key in conf.MOODS.keys():
-        for mood in key.split(','):
+        for mood in key.split(","):
             result[mood.strip()] = conf.MOODS[key]
     return result
+
 
 def get_score(mood: str, interpreted_moods: dict[str, int]) -> int:
     """
@@ -83,7 +85,9 @@ def format_row(row: dict[str, str], datetime_obj, mood: str, mood_score: int) ->
 
 
 def clean_row(
-    row: dict[str, str], default_activities: dict[str, int], interpreted_moods: dict[str, int]
+    row: dict[str, str],
+    default_activities: dict[str, int],
+    interpreted_moods: dict[str, int],
 ) -> dict[str, str]:
     """
     Expect a CSV row and default activities and return cleaned row.
@@ -159,7 +163,7 @@ def clean_daylio_data(available_activities: set, in_data: list[dict[str, str]]):
     Convert Daylio CSV file to a more usable CSV report.
     """
     default_activities = {key: 0 for key in available_activities}
-    moods: dict[str: int] = interpret_moods()
+    moods: dict[str:int] = interpret_moods()
     out_data = [clean_row(row, default_activities.copy(), moods) for row in in_data]
 
     out_fields = CSV_OUT_FIELDS.copy()
