@@ -164,7 +164,7 @@ def clean_daylio_data(available_activities: set, in_data: list[dict[str, str]]):
     Convert Daylio CSV file to a more usable CSV report.
     """
     default_activities = {key: 0 for key in available_activities}
-    moods: dict[str:int] = interpret_moods()
+    moods = interpret_moods()
     out_data = [clean_row(row, default_activities.copy(), moods) for row in in_data]
 
     out_fields = CSV_OUT_FIELDS.copy()
