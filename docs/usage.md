@@ -118,12 +118,17 @@ Kurtosis:                       3.166   Cond. No.                         20.0
 
 ## Development
 
-### Lint
+### Format and lint
 
 ```sh
-$ make lint
+$ make fix
 ```
 
+### Check types
+
+```sh
+$ make typecheck
+```
 
 
 ## Database
