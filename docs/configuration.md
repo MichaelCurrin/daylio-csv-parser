@@ -34,14 +34,18 @@ If you do that, you need to configure this Dayliopy tool to know which level fro
 
 So set the moods in the `[daylio]` section to exactly match the labels in your CSV. You only need to set values in the local config if they differ from the base config.
 
-e.g. You can replace mood level 3 from "meh" default in Daylio with "average".
+### Basic
+
+You could replace mood level 3 from "meh" default in Daylio with "average".
 
 ```ini
 [daylio]
 mood3: average 
 ```
 
-e.g. If you use multiple labels for the same level, you can configure this in the config too.
+### Multiple moods
+
+If you use more than 5 moods and want to map multiple labels for the same level, you can configure this in the config too.
 
 ```ini
 mood5: amazing
@@ -50,3 +54,7 @@ mood3: ok, ok but sleepy
 mood2: sad, bad, anxious
 mood1: horrible
 ```
+
+Note use of comma and optional space to separate values.
+
+NB. Make sure in the Daylio app to take out any commas from the mood label, to avoid issues here.
