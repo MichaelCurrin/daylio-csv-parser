@@ -41,7 +41,6 @@ def to_dt(date: str, time: str) -> datetime.datetime:
     return datetime.datetime.strptime(dt_str, dt_format)
 
 
-
 def interpret_moods() -> dict[str, int]:
     result = {}
     for key in conf.MOODS.keys():
