@@ -16,7 +16,7 @@ conf = AppConf()
 DT_12H = r"%Y-%m-%d %I:%M %p"
 DT_24H = r"%Y-%m-%d %H:%M"
 
-ACTIVITIES_KEY = 'activities'
+ACTIVITIES_KEY = "activities"
 CSV_OUT_FIELDS = [
     "timestamp",
     "datetime",
@@ -154,6 +154,10 @@ def read_csv(csv_in_path: str) -> tuple[set[str], list[dict[str, str]]]:
 
         for row in reader:
             original_activities_str = row[ACTIVITIES_KEY]
+            if original_activities_str is None:
+                raise ValueError(
+                    f"The {ACTIVITIES_KEY} column is present but blank. Fix the formatting of your CSV. Got row: \n  {row}"
+                )
             activities_list = process_activities(original_activities_str)
 
             available_activities.update(activities_list)
