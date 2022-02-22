@@ -123,8 +123,8 @@ def process_activities(activities_str: str) -> list:
     """
     activities_split = activities_str.split(" | ")
 
-    # Ignore row of no activities, which will be a single null string
-    # after splitting.
+    # Ignore row of no activities, which will be a single null string after
+    # splitting.
     if len(activities_split) == 1 and activities_split[0] == "":
         activities_list = []
     else:
