@@ -16,6 +16,7 @@ conf = AppConf()
 DT_12H = r"%Y-%m-%d %I:%M %p"
 DT_24H = r"%Y-%m-%d %H:%M"
 
+ACTIVITIES_KEY = 'activities'
 CSV_OUT_FIELDS = [
     "timestamp",
     "datetime",
@@ -146,8 +147,13 @@ def read_csv(csv_in_path: str) -> tuple[set[str], list[dict[str, str]]]:
     with codecs.open(csv_in_path, "r", encoding="utf-8-sig") as f_in:
         reader = csv.DictReader(f_in)
 
+        if ACTIVITIES_KEY not in reader.fieldnames:
+            raise ValueError(
+                f"{ACTIVITIES_KEY} column missing - found: {reader.fieldnames}"
+            )
+
         for row in reader:
-            original_activities_str = row["activities"]
+            original_activities_str = row[ACTIVITIES_KEY]
             activities_list = process_activities(original_activities_str)
 
             available_activities.update(activities_list)
