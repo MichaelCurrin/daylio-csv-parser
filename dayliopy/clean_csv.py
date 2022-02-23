@@ -50,10 +50,15 @@ def to_dt(date: str, time: str) -> datetime.datetime:
 
 
 def interpret_moods() -> TIntDict:
+    """
+    Return moods from the config, allowing multiple moods to have the same score.
+    """
     result = {}
+
     for key in conf.MOODS.keys():
         for mood in key.split(","):
             result[mood.strip()] = conf.MOODS[key]
+
     return result
 
 
@@ -104,6 +109,7 @@ def clean_row(
 
     :param row: Values as read from source CSV.
     :param default_activities: Activities, initialized to default values.
+    :param interpreted_moods: Processed moods.
 
     :return combined: Row as field names and values. Includes fields which are
         fixed and also fields which are dynamic, based on activities which are
@@ -196,8 +202,10 @@ def clean_daylio_data(available_activities: set, in_data: TDictRows):
     Convert Daylio CSV file to a more usable CSV report.
     """
     default_activities = {key: 0 for key in available_activities}
-    moods = interpret_moods()
-    out_data = [clean_row(row, default_activities.copy(), moods) for row in in_data]
+    interpreted_moods = interpret_moods()
+    out_data = [
+        clean_row(row, default_activities.copy(), interpreted_moods) for row in in_data
+    ]
 
     out_fields = CSV_OUT_FIELDS.copy()
     activity_columns = sorted(list(available_activities))
