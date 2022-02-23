@@ -13,6 +13,7 @@ from .lib.config import AppConf
 
 
 TStrDict = dict[str, str]
+TIntDict = dict[str, int]
 TDictRows = list[TStrDict]
 
 conf = AppConf()
@@ -48,7 +49,7 @@ def to_dt(date: str, time: str) -> datetime.datetime:
     return datetime.datetime.strptime(dt_str, dt_format)
 
 
-def interpret_moods() -> dict[str, int]:
+def interpret_moods() -> TIntDict:
     result = {}
     for key in conf.MOODS.keys():
         for mood in key.split(","):
@@ -56,7 +57,7 @@ def interpret_moods() -> dict[str, int]:
     return result
 
 
-def get_score(mood: str, interpreted_moods: dict[str, int]) -> int:
+def get_score(mood: str, interpreted_moods: TIntDict) -> int:
     """
     Get mood score.
     """
@@ -75,16 +76,18 @@ def get_score(mood: str, interpreted_moods: dict[str, int]) -> int:
     return mood_score
 
 
-def format_row(row: TStrDict, datetime_obj, mood: str, mood_score: int) -> dict:
+def format_row(
+    row: TStrDict, dt: datetime.datetime, mood: str, mood_score: int
+) -> dict:
     """
     Convert Daylio row data for writing to CSV.
     """
     return {
-        "timestamp": datetime_obj.timestamp(),
-        "datetime": str(datetime_obj),
-        "date": str(datetime_obj.date()),
+        "timestamp": dt.timestamp(),
+        "datetime": str(dt),
+        "date": str(dt.date()),
         "weekday_label": row["weekday"],
-        "weekday_num": datetime_obj.weekday(),
+        "weekday_num": dt.weekday(),
         "mood_label": mood,
         "mood_score": mood_score,
         "note": row["note"],
@@ -93,8 +96,8 @@ def format_row(row: TStrDict, datetime_obj, mood: str, mood_score: int) -> dict:
 
 def clean_row(
     row: TStrDict,
-    default_activities: dict[str, int],
-    interpreted_moods: dict[str, int],
+    default_activities: TIntDict,
+    interpreted_moods: TIntDict,
 ) -> TStrDict:
     """
     Expect a CSV row and default activities and return cleaned row.
