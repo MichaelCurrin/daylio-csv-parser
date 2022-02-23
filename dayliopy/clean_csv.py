@@ -156,7 +156,8 @@ def read_csv(csv_in_path: str) -> tuple[set[str], list[dict[str, str]]]:
             original_activities_str = row[ACTIVITIES_KEY]
             if original_activities_str is None:
                 raise ValueError(
-                    f"The {ACTIVITIES_KEY} column is present but blank. Fix the formatting of your CSV. Got row: \n  {row}"
+                    f"The {ACTIVITIES_KEY} column is present but blank."
+                    " Fix the formatting of your CSV. Got row: \n  {row}"
                 )
             activities_list = process_activities(original_activities_str)
 
