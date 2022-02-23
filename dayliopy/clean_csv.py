@@ -12,11 +12,11 @@ from typing import Optional, Sequence
 from .lib.config import AppConf
 
 
+conf = AppConf()
+
 TStrDict = dict[str, str]
 TIntDict = dict[str, int]
 TDictRows = list[TStrDict]
-
-conf = AppConf()
 
 DT_12H = r"%Y-%m-%d %I:%M %p"
 DT_24H = r"%Y-%m-%d %H:%M"
