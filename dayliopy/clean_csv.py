@@ -147,6 +147,9 @@ def read_csv(csv_in_path: str) -> tuple[set[str], list[dict[str, str]]]:
     with codecs.open(csv_in_path, "r", encoding="utf-8-sig") as f_in:
         reader = csv.DictReader(f_in)
 
+        if not reader.fieldnames:
+            raise ValueError("Column names are missing")
+
         if ACTIVITIES_KEY not in reader.fieldnames:
             raise ValueError(
                 f"{ACTIVITIES_KEY} column missing - found: {reader.fieldnames}"
