@@ -12,6 +12,9 @@ from typing import Optional, Sequence
 from .lib.config import AppConf
 
 
+TStrDict = dict[str, str]
+TDictRows = list[TStrDict]
+
 conf = AppConf()
 
 DT_12H = r"%Y-%m-%d %I:%M %p"
@@ -72,7 +75,7 @@ def get_score(mood: str, interpreted_moods: dict[str, int]) -> int:
     return mood_score
 
 
-def format_row(row: dict[str, str], datetime_obj, mood: str, mood_score: int) -> dict:
+def format_row(row: TStrDict, datetime_obj, mood: str, mood_score: int) -> dict:
     """
     Convert Daylio row data for writing to CSV.
     """
@@ -89,10 +92,10 @@ def format_row(row: dict[str, str], datetime_obj, mood: str, mood_score: int) ->
 
 
 def clean_row(
-    row: dict[str, str],
+    row: TStrDict,
     default_activities: dict[str, int],
     interpreted_moods: dict[str, int],
-) -> dict[str, str]:
+) -> TStrDict:
     """
     Expect a CSV row and default activities and return cleaned row.
 
@@ -151,7 +154,7 @@ def validate_input_csv(fieldnames: Optional[Sequence[str]]) -> None:
         raise ValueError(f"{ACTIVITIES_KEY} column missing - found: {fieldnames}")
 
 
-def read_csv(csv_in_path: str) -> tuple[set[str], list[dict[str, str]]]:
+def read_csv(csv_in_path: str) -> tuple[set[str], TDictRows]:
     """
     Read Daylio CSV.
 
@@ -159,7 +162,7 @@ def read_csv(csv_in_path: str) -> tuple[set[str], list[dict[str, str]]]:
     we are adding the activities list to it as a list.
     """
     available_activities: set[str] = set()
-    in_data: list[dict[str, str]] = []
+    in_data: list[TStrDict] = []
 
     with codecs.open(csv_in_path, "r", encoding="utf-8-sig") as f_in:
         reader = csv.DictReader(f_in)
@@ -185,7 +188,7 @@ def read_csv(csv_in_path: str) -> tuple[set[str], list[dict[str, str]]]:
     return available_activities, in_data
 
 
-def clean_daylio_data(available_activities: set, in_data: list[dict[str, str]]):
+def clean_daylio_data(available_activities: set, in_data: TDictRows):
     """
     Convert Daylio CSV file to a more usable CSV report.
     """
@@ -204,7 +207,7 @@ def clean_daylio_data(available_activities: set, in_data: list[dict[str, str]]):
 
 
 def write_csv(
-    csv_out_path: str, out_data: list[dict[str, str]], out_fields: list[str]
+    csv_out_path: str, out_data: list[TStrDict], out_fields: list[str]
 ) -> None:
     """
     Write rows to a CSV.
