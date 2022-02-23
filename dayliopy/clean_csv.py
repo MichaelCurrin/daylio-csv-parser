@@ -197,7 +197,9 @@ def read_csv(csv_in_path: str) -> tuple[set[str], TDictRows]:
     return available_activities, in_data
 
 
-def clean_daylio_data(available_activities: set, in_data: TDictRows):
+def clean_daylio_data(
+    available_activities: set, in_data: TDictRows
+) -> tuple[TDictRows, list[str]]:
     """
     Convert Daylio CSV file to a more usable CSV report.
     """
