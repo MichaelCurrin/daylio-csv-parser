@@ -32,6 +32,8 @@ CSV_OUT_FIELDS = [
 
 def to_dt(date: str, time: str) -> datetime.datetime:
     """
+    Convert date and time to datetime object.
+
     :param date: Date in format like '2021-09-28'.
     :param time: Time in format like '10:00 pm' or '22:00'.
     """
@@ -165,6 +167,8 @@ def read_csv(csv_in_path: str) -> tuple[set[str], list[dict[str, str]]]:
         validate_input_csv(reader.fieldnames)
 
         for row in reader:
+            # TODO: break out block into a function.
+
             original_activities_str = row[ACTIVITIES_KEY]
             if original_activities_str is None:
                 raise ValueError(
