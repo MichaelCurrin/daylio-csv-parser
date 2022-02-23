@@ -203,7 +203,9 @@ def clean_daylio_data(available_activities: set, in_data: list[dict[str, str]]):
     return out_data, out_fields
 
 
-def write_csv(csv_out_path, out_data, out_fields):
+def write_csv(
+    csv_out_path: str, out_data: list[dict[str, str]], out_fields: list[str]
+) -> None:
     """
     Write rows to a CSV.
     """
