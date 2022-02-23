@@ -7,6 +7,7 @@ Read in input CSV, clean it and write out to a new CSV.
 import codecs
 import csv
 import datetime
+from typing import Optional, Sequence
 
 from .lib.config import AppConf
 
@@ -134,6 +135,20 @@ def process_activities(activities_str: str) -> list:
     return activities_list
 
 
+def validate_input_csv(fieldnames: Optional[Sequence[str]]) -> None:
+    """
+    Validate the input CSV has appropriate fields.
+
+    The fields are unlikely to be missing by checking that here helps for the
+    Mypy check.
+    """
+    if not fieldnames:
+        raise ValueError("Column names are missing")
+
+    if ACTIVITIES_KEY not in fieldnames:
+        raise ValueError(f"{ACTIVITIES_KEY} column missing - found: {fieldnames}")
+
+
 def read_csv(csv_in_path: str) -> tuple[set[str], list[dict[str, str]]]:
     """
     Read Daylio CSV.
@@ -147,13 +162,7 @@ def read_csv(csv_in_path: str) -> tuple[set[str], list[dict[str, str]]]:
     with codecs.open(csv_in_path, "r", encoding="utf-8-sig") as f_in:
         reader = csv.DictReader(f_in)
 
-        if not reader.fieldnames:
-            raise ValueError("Column names are missing")
-
-        if ACTIVITIES_KEY not in reader.fieldnames:
-            raise ValueError(
-                f"{ACTIVITIES_KEY} column missing - found: {reader.fieldnames}"
-            )
+        validate_input_csv(reader.fieldnames)
 
         for row in reader:
             original_activities_str = row[ACTIVITIES_KEY]
