@@ -73,7 +73,7 @@ def prepare_data(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def fit(csv_in_path: str):
+def fit_model_to_csv(csv_in_path: str):
     """
     Fit an Ordinary Least Squares model to input Daylio data and return it.
 
@@ -99,7 +99,7 @@ def main() -> None:
     Command-line entry-point.
     """
     csv_in_path = conf.get("data", "cleaned_csv")
-    model = fit(csv_in_path)
+    model = fit_model_to_csv(csv_in_path)
 
     # Note the signs and sizes of the co-efficients.
     print(model.summary())
