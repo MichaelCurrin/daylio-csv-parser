@@ -73,7 +73,7 @@ def prepare_data(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def fit(csv_in_path: str) -> statsmodels.api.OLS:
+def fit(csv_in_path: str):
     """
     Fit an Ordinary Least Squares model to input Daylio data and return it.
 
@@ -89,10 +89,12 @@ def fit(csv_in_path: str) -> statsmodels.api.OLS:
         axis="columns",
     )
 
-    return statsmodels.api.OLS(y, X).fit()
+    model = statsmodels.api.OLS(y, X)
+
+    return model.fit()
 
 
-def main():
+def main() -> None:
     """
     Command-line entry-point.
     """
