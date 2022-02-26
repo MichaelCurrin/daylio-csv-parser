@@ -29,6 +29,40 @@ $ cp dayliopy/etc/app.template.conf dayliopy/etc/app.local.conf
 ```
 
 
+## CSV input
+
+### Default
+
+The default location for the input CSV is this, as set in [app.conf](/dayliopy/etc/app.conf)
+
+```
+dayliopy/var/data_in/daylio_export.csv
+```
+
+### Custom
+
+You can override to a custom location:
+
+```ini
+[data]
+source_csv: source_csv: %(var_dir)s/data_in/my_export.csv
+```
+
+### Sample files for development
+
+Point to one of the sample files in version control. This is useful for developers testing this app.
+
+```ini
+[data]
+source_csv: %(app_dir)s/sample.csv
+```
+
+```ini
+[data]
+source_csv: %(app_dir)s/sample_multiple_moods.csv
+```
+
+
 ## Configuring moods
 
 The Daylio app lets you override the labels for moods, which then appears in your export.
