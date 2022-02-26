@@ -65,8 +65,9 @@ def interpret_moods() -> TIntDict:
 def get_score(mood: str, interpreted_moods: TIntDict) -> int:
     """
     Get mood score.
+
+    Match the mood label against the configured label and numeric value.
     """
-    # Match the mood label against the configured label and numeric value.
     mood = mood.strip()
 
     try:
@@ -74,8 +75,8 @@ def get_score(mood: str, interpreted_moods: TIntDict) -> int:
     except KeyError as e:
         raise type(e)(
             f"Each mood label in your CSV must be added to a conf file so that"
-            f" it can be assigned a numeric value. Not found:"
-            f" {mood}. Configured moods: {conf.MOODS}"
+            f" it can be assigned a numeric value. Not found: '{mood}'."
+            f" Configured moods: {conf.MOODS}"
         )
 
     return mood_score
@@ -85,7 +86,7 @@ def format_row(
     row: TStrDict, dt: datetime.datetime, mood: str, mood_score: int
 ) -> dict:
     """
-    Convert Daylio row data for writing to CSV.
+    Prepare a Daylio row entry for writing out.
     """
     return {
         "timestamp": dt.timestamp(),
