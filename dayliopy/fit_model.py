@@ -41,6 +41,13 @@ def prepare_data(df: pd.DataFrame) -> pd.DataFrame:
     year. Therefore for simplicity, unique year values are split into one-hot
     encoded columns, as with week and month.
 
+    e.g. weekday_1, weekday_7, month_1, month_12
+
+    We no longer set `verify_integrity=False` on the datetime index, as this
+    causes errors in the unlikely case that someone sets two records for the
+    same time. Which is okay as we only use the index for month and year.
+    See issue #25.
+
     :param df: Cleaned input data.
 
     :return df: Encoded data.
@@ -50,7 +57,7 @@ def prepare_data(df: pd.DataFrame) -> pd.DataFrame:
 
     df["datetime"] = pd.to_datetime(df.datetime)
 
-    df.set_index("datetime", inplace=True, verify_integrity=True)
+    df.set_index("datetime", inplace=True)
     df["month_num"] = df.index.month
     df["year"] = df.index.year
 
