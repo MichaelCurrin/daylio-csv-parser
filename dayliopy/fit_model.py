@@ -17,6 +17,7 @@ direction of the factor's influence on the mood score.
 import pandas as pd
 import statsmodels.api
 
+from .lib import CSV_ENCODING
 from .lib.config import AppConf
 
 
@@ -79,7 +80,7 @@ def fit_model_to_csv(csv_in_path: str):
 
     :param csv_in_path: Path to cleaned CSV.
     """
-    df = pd.read_csv(csv_in_path)
+    df = pd.read_csv(csv_in_path, encoding=CSV_ENCODING)
 
     encoded_df = prepare_data(df)
 
