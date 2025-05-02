@@ -1,4 +1,4 @@
-SHELL = /bin/bash
+SHELL = /bin/sh
 APP_DIR = dayliopy
 export PYTHONPATH
 
