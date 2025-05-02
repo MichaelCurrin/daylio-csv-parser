@@ -10,7 +10,7 @@
 [![dependency - pandas](https://img.shields.io/badge/dependency-pandas-blue)](https://pypi.org/project/pandas)
 
 
-This Python 3 CLI took will convert a Daylio CSV export into a more usable CSV and a SQLite database.
+This Python 3 CLI took will convert a Daylio CSV export into a more usable CSV and a SQLite database. There are also options to generate reports using stats regression models to find patterns, but this is less needed since Daylio added counts and correlations into their app UI.
 
 
 ## About Daylio CSV
