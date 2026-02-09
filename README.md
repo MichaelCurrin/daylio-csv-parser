@@ -12,6 +12,7 @@
 
 This Python 3 CLI took will convert a Daylio CSV export into a more usable CSV and a SQLite database. There are also options to generate reports using stats regression models to find patterns, but this is less needed since Daylio added counts and correlations into their app UI.
 
+Related project - [daylio-to-md-converter](https://github.com/MichaelCurrin/daylio-to-md-converter). A Python CLI tool to convert the Daylio CSV to Markdown files with frontmatter, suitable for using in Obsidian.
 
 ## About Daylio CSV
 
